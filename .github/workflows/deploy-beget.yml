@@ -23,7 +23,6 @@ jobs:
           local-dir: ./devbitrix-static-mirror/
           server-dir: ${{ secrets.FTP_REMOTE_PATH }}
           protocol: ftp
-          dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.github/**
@@ -32,3 +31,4 @@ jobs:
             **/node_modules/**
             **/.DS_Store
             **/Thumbs.db
+            bitrix/**
