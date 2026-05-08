@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+		:root{
+			--bg:#f5f9ff;
+			--panel:#ffffff;
+			--text:#0f172a;
+			--muted:#64748b;
+			--line:#dbeafe;
+			--blue:#2563eb;
+			--blue-dark:#1d4ed8;
+			/* отступ под липкую шапку для сайдбаров со sticky */
+			--articles-sticky-top:88px;
+			/* сетка «контент + сайдбар» как на странице статьи: 820 + 40 + 288 */
+			--articles-content-max:820px;
+			--articles-sidebar-w:288px;
+			--articles-layout-gap:40px;
+			--articles-row-max:1148px;
+			--articles-sb-cta-min-height:216.7px;
+		}
+
+		/* Общие блоки сайдбара: список статей и детальная статья */
+		.p-sb-cta{
+			background:linear-gradient(150deg,#1d4ed8 0%,#3b82f6 100%);
+			border-radius:16px;
+			padding:22px;
+			color:#fff;
+			margin-bottom:18px;
+			box-shadow:0 10px 26px rgba(37,99,235,.22);
+			box-sizing:border-box;
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+			min-height:var(--articles-sb-cta-min-height);
+		}
+		.p-sb-cta h3{
+			font-size:17px;
+			font-weight:800;
+			margin:0 0 8px;
+			color:#fff;
+			line-height:1.25;
+		}
+		.p-sb-cta > p:not(.p-sb-cta-free){
+			font-size:14px;
+			line-height:1.55;
+			margin:0 0 14px;
+			color:rgba(255,255,255,.88);
+		}
+		.p-sb-cta-free{
+			font-size:12px;
+			color:rgba(255,255,255,.78);
+			margin:8px 0 0;
+			text-align:center;
+		}
+		.p-sb-btn{
+			display:block;
+			text-align:center;
+			padding:11px 14px;
+			background:#fff;
+			color:#1d4ed8;
+			border-radius:10px;
+			font-size:14px;
+			font-weight:800;
+			text-decoration:none;
+			transition:all .16s ease;
+		}
+		.p-sb-btn:hover{
+			opacity:.92;
+			transform:translateY(-1px);
+		}
+		.p-sb-useful{
+			background:#fff;
+			border:1px solid #e8f0fe;
+			border-radius:14px;
+			padding:18px 18px 8px;
+			margin-bottom:18px;
+			box-sizing:border-box;
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+		}
+		.p-sb-useful h4{
+			font-size:15px;
+			font-weight:800;
+			color:#0f172a;
+			margin:0 0 10px;
+		}
+		.p-sb-useful a{
+			display:block;
+			padding:9px 0;
+			border-bottom:1px solid #eef4ff;
+			color:#2563eb;
+			text-decoration:none;
+			font-size:14px;
+			font-weight:600;
+		}
+		.p-sb-useful a:last-child{
+			border-bottom:none;
+			padding-bottom:2px;
+		}
+		.p-sb-useful a:hover{color:#1d4ed8}
+
+		.p-sidebar{
+			position:sticky;
+			top:var(--articles-sticky-top,88px);
+			align-self:start;
+			flex:0 0 var(--articles-sidebar-w);
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+			max-height:calc(100vh - var(--articles-sticky-top,88px) - 16px);
+			overflow-y:auto;
+			overflow-x:hidden;
+			-webkit-overflow-scrolling:touch;
+			z-index:5;
+		}
+		@media (max-width:1100px){
+			.p-sidebar{
+				position:static;
+				flex:none;
+				width:auto;
+				max-height:none;
+				overflow:visible;
+			}
+			.p-sb-cta,
+			.p-sb-useful{
+				width:auto;
+				max-width:100%;
+			}
+		}
+
+		/*
+		 * Не вешаем overflow-x на .articles-main / .articles-shell — иначе ломается
+		 * position:sticky у правого сайдбара. Горизонталь обрезаем в колонке контента.
+		 */
+		*{box-sizing:border-box}
+		body.articles-layout{
+			margin:0;
+			min-width:0;
+			width:100%;
+			font-family:'Inter',system-ui,-apple-system,sans-serif;
+			color:var(--text);
+			background:var(--bg);
+		}
+		.articles-main{
+			min-width:0;
+		}
+
+		.articles-topbar{
+			position:sticky;
+			top:0;
+			z-index:1000;
+			width:100%;
+			max-width:100%;
+			box-sizing:border-box;
+			background:rgba(245,249,255,.92);
+			backdrop-filter:blur(8px);
+			border-bottom:1px solid var(--line);
+		}
+
+		.articles-topbar-inner{
+			max-width:1240px;
+			margin:0 auto;
+			padding:12px 18px;
+			display:grid;
+			grid-template-columns:auto 1fr auto auto;
+			align-items:center;
+			gap:14px;
+		}
+
+		.articles-logo{
+			display:flex;
+			align-items:center;
+			gap:10px;
+			text-decoration:none;
+			color:var(--text);
+		}
+		.articles-logo-badge{
+			width:34px;height:34px;border-radius:10px;
+			display:inline-flex;align-items:center;justify-content:center;
+			background:linear-gradient(135deg,var(--blue),#60a5fa);
+			color:#fff;font-weight:900;font-size:14px;
+		}
+		.articles-logo-text{line-height:1}
+		.articles-logo-title{font-size:14px;font-weight:900;letter-spacing:.02em}
+		.articles-logo-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+		.articles-nav{
+			display:flex;
+			align-items:center;
+			gap:14px;
+			justify-content:center;
+			flex-wrap:wrap;
+		}
+		.articles-nav a{
+			text-decoration:none;
+			color:#334155;
+			font-size:14px;
+			font-weight:600;
+			padding:8px 10px;
+			border-radius:10px;
+			transition:.18s;
+		}
+		.articles-nav a:hover{background:#eaf2ff;color:var(--blue-dark)}
+
+		.articles-phone{
+			text-decoration:none;
+			color:var(--text);
+			font-weight:700;
+			font-size:14px;
+			white-space:nowrap;
+		}
+
+		.articles-cta{
+			display:inline-flex;
+			align-items:center;
+			justify-content:center;
+			padding:10px 16px;
+			border-radius:12px;
+			background:linear-gradient(135deg,var(--blue),#3b82f6);
+			color:#fff;
+			text-decoration:none;
+			font-size:14px;
+			font-weight:800;
+			white-space:nowrap;
+			transition:.18s;
+		}
+		.articles-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,99,235,.28)}
+
+		.articles-shell{
+			max-width:1240px;
+			margin:0 auto;
+			padding:24px 18px 56px;
+			width:100%;
+			min-width:0;
+			overflow:visible;
+		}
+
+		@media (max-width:980px){
+			.articles-topbar-inner{
+				grid-template-columns:1fr auto;
+				gap:10px;
+			}
+			.articles-nav{grid-column:1/-1;justify-content:flex-start;order:3}
+			.articles-phone{display:none}
+		}
+	</style>
+</head>
+<body class="articles-layout">
+<header class="articles-topbar">
+<div class="articles-topbar-inner">
+<a class="articles-logo" href="../index.html">
+<span class="articles-logo-badge">SE</span>
+<span class="articles-logo-text">
+<span class="articles-logo-title">SMARTLINK ESTATE</span>
+<span class="articles-logo-sub">Недвижимость и аналитика</span>
+</span>
+</a>
+<nav class="articles-nav">
+<a href="../index.html">Новостройки</a>
+<a href="index.html">Статьи</a>
+<a href="../contacts/index.html">Контакты</a>
+</nav>
+<a class="articles-phone" href="tel:+78000000000">8 (800) 000-00-00</a>
+<a class="articles-cta" href="../contacts/index.html">Подобрать квартиру</a>
+</div>
+</header>
+<div class="articles-main">
+<div class="articles-shell">
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
+
+.al-wrap{font-family:'Inter',system-ui,sans-serif;color:#1e293b;-webkit-font-smoothing:antialiased;max-width:100%;margin:0;overflow:visible}
+.al-hero{margin-bottom:36px}
+.al-hero h1{font-size:clamp(28px,4vw,40px);font-weight:900;color:#0f172a;margin:0 0 8px;letter-spacing:-.02em}
+.al-hero p{font-size:16px;color:#64748b;margin:0}
+
+/* Фильтр по тегам */
+.al-tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px}
+.al-tag-btn{padding:7px 16px;border-radius:100px;border:1.5px solid #e2e8f0;background:#fff;font-size:14px;font-weight:600;color:#475569;cursor:pointer;transition:all .18s}
+.al-tag-btn:hover,.al-tag-btn.active{background:#2563eb;border-color:#2563eb;color:#fff}
+
+/* Сетка карточек */
+.al-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+@media(max-width:900px){.al-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:580px){.al-grid{grid-template-columns:1fr}}
+
+.al-card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid #e8f0fe;transition:box-shadow .2s,transform .2s;display:flex;flex-direction:column;text-decoration:none;color:inherit}
+.al-card:hover{box-shadow:0 8px 32px rgba(37,99,235,.13);transform:translateY(-3px)}
+.al-card-img{width:100%;height:180px;object-fit:cover;display:block;background:#eff6ff}
+.al-card-img-placeholder{width:100%;height:180px;background:linear-gradient(135deg,#dbeafe 0%,#eff6ff 100%);display:flex;align-items:center;justify-content:center;font-size:36px}
+.al-card-body{padding:18px 20px 20px;flex:1;display:flex;flex-direction:column;gap:10px}
+.al-card-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.al-card-tag{font-size:12px;font-weight:700;color:#2563eb;background:#eff6ff;border-radius:6px;padding:3px 9px;letter-spacing:.02em}
+.al-card-date{font-size:12px;color:#94a3b8}
+.al-card-title{font-size:17px;font-weight:700;color:#0f172a;line-height:1.35;margin:0}
+.al-card-text{font-size:14px;color:#64748b;line-height:1.6;margin:0;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.al-card-cta{margin-top:auto;font-size:14px;font-weight:600;color:#2563eb;display:inline-flex;align-items:center;gap:4px}
+
+/* Как .p-layout на странице статьи (grid + та же колонка сайдбара); .p-sidebar — в header_articles.php */
+.al-layout{
+	display:grid;
+	grid-template-columns:minmax(0,1fr) var(--articles-sidebar-w,288px);
+	gap:var(--articles-layout-gap,40px);
+	align-items:start;
+	max-width:100%;
+	overflow:visible;
+}
+.al-layout__main{
+	max-width:var(--articles-content-max,820px);
+	min-width:0;
+	overflow-x:clip;
+	box-sizing:border-box;
+}
+@media(max-width:1100px){
+	.al-layout{grid-template-columns:1fr}
+}
+.al-empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:#94a3b8;font-size:16px}
+
+/* Показать ещё */
+.al-more-wrap{margin-top:32px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:12px}
+.al-more-btn{display:inline-block;padding:13px 32px;background:#2563eb;color:#fff;border:1.5px solid #2563eb;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;cursor:pointer;transition:background .18s,border-color .18s,opacity .18s}
+.al-more-btn:hover:not(:disabled){background:#1d4ed8;border-color:#1d4ed8}
+.al-more-btn:disabled{opacity:.55;cursor:wait}
+.al-more-count{margin:0;font-size:14px;color:#94a3b8;font-weight:500}
+</style>
+<div class="al-wrap">
+<div class="al-hero">
+<h1>Статьи о недвижимости</h1>
+<p>196 материалов о покупке, инвестициях и рынке ЮБК</p>
+</div>
+<div class="al-tags">
+<button class="al-tag-btn active" data-tag="all">Все</button>
+<button class="al-tag-btn" data-tag="инвестиции в недвижимость">
+                инвестиции в недвижимость            </button>
+<button class="al-tag-btn" data-tag="доходность объекта">
+                доходность объекта            </button>
+<button class="al-tag-btn" data-tag="валовая доходность">
+                валовая доходность            </button>
+<button class="al-tag-btn" data-tag="чистая доходность">
+                чистая доходность            </button>
+<button class="al-tag-btn" data-tag="расчет доходности">
+                расчет доходности            </button>
+<button class="al-tag-btn" data-tag="недвижимость Крыма">
+                недвижимость Крыма            </button>
+<button class="al-tag-btn" data-tag="Евпатория">
+                Евпатория            </button>
+<button class="al-tag-btn" data-tag="проверка объекта">
+                проверка объекта            </button>
+<button class="al-tag-btn" data-tag="доходность недвижимости">
+                доходность недвижимости            </button>
+<button class="al-tag-btn" data-tag="аренда в Крыму">
+                аренда в Крыму            </button>
+<button class="al-tag-btn" data-tag="чистый доход">
+                чистый доход            </button>
+<button class="al-tag-btn" data-tag="операционные расходы">
+                операционные расходы            </button>
+<button class="al-tag-btn" data-tag="план инвестора">
+                план инвестора            </button>
+<button class="al-tag-btn" data-tag="сделка с недвижимостью">
+                сделка с недвижимостью            </button>
+<button class="al-tag-btn" data-tag="рынок недвижимости Крыма">
+                рынок недвижимости Крыма            </button>
+<button class="al-tag-btn" data-tag="цены на недвижимость 2026">
+                цены на недвижимость 2026            </button>
+<button class="al-tag-btn" data-tag="спрос на недвижимость">
+                спрос на недвижимость            </button>
+<button class="al-tag-btn" data-tag="анализ рынка Крыма">
+                анализ рынка Крыма            </button>
+<button class="al-tag-btn" data-tag="первичный рынок">
+                первичный рынок            </button>
+<button class="al-tag-btn" data-tag="вторичный рынок">
+                вторичный рынок            </button>
+<button class="al-tag-btn" data-tag="ликвидность недвижимости">
+                ликвидность недвижимости            </button>
+<button class="al-tag-btn" data-tag="стратегия инвестирования">
+                стратегия инвестирования            </button>
+<button class="al-tag-btn" data-tag="ошибки инвесторов">
+                ошибки инвесторов            </button>
+<button class="al-tag-btn" data-tag="недвижимость в Крыму">
+                недвижимость в Крыму            </button>
+<button class="al-tag-btn" data-tag="инвестиционная стратегия">
+                инвестиционная стратегия            </button>
+</div>
+<div class="al-layout">
+<div class="al-layout__main">
+<div class="al-grid" data-initial="9" data-page-size="9" data-total="196" id="al-grid">
+<a class="al-card" data-tags="" href="krym-vs-sochi-investitsii-2026-2/index.html">
+<div class="al-card-img-placeholder">🏠</div>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">Статья</span>
+<span class="al-card-date">06.05.2026</span>
+</div>
+<h2 class="al-card-title">Крым vs Сочи: где инвестору проще зайти в 2026 году</h2>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="" href="krym-vs-sochi-investitsii-2026/index.html">
+<div class="al-card-img-placeholder">🏠</div>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">Статья</span>
+<span class="al-card-date">06.05.2026</span>
+</div>
+<h2 class="al-card-title">Крым vs Сочи: где инвестору проще зайти в 2026 году</h2>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="инвестиции в недвижимость,доходность объекта,валовая доходность,чистая доходность,расчет доходности" href="chistaya-i-valovaya-dohodnost-v-chem-raznica-dlya-investora-2/index.html">
+<img alt="Чистая и валовая доходность: в чем разница для инвестора" class="al-card-img" src="../upload/iblock/0cd/r2kgb59l07mpugdp0a21ivt63wb36u5h.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">инвестиции в недвижимость</span>
+<span class="al-card-date">05.05.2026</span>
+</div>
+<h2 class="al-card-title">Чистая и валовая доходность: в чем разница для инвестора</h2>
+<p class="al-card-text">Чем чистая доходность отличается от валовой, какие расходы учесть и как проверить расчет объекта перед покупкой.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="чистая доходность,валовая доходность,инвестиции в недвижимость,доходность объекта,недвижимость Крыма,Евпатория,проверка объекта" href="chistaya-i-valovaya-dohodnost-v-chem-raznica-dlya-investora-v-krymu/index.html">
+<img alt="Чистая и валовая доходность: в чем разница для инвестора" class="al-card-img" src="../upload/iblock/4b2/qqbtgswpejg7c1psz21ftoaimd08w14i.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">чистая доходность</span>
+<span class="al-card-date">05.05.2026</span>
+</div>
+<h2 class="al-card-title">Чистая и валовая доходность: в чем разница для инвестора</h2>
+<p class="al-card-text">Валовая доходность помогает быстро отфильтровать объекты, а чистая показывает более рабочую картину после расходов, простоев и допущений. Перед покупкой важно запросить расчет, документы и проверить, что именно стоит за заявленной цифрой.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="доходность недвижимости,инвестиции в недвижимость,чистая доходность,валовая доходность,расчет доходности" href="chistaya-i-valovaya-dohodnost-v-chem-raznica-dlya-investora/index.html">
+<img alt="Чистая и валовая доходность: в чем разница для инвестора" class="al-card-img" src="../upload/iblock/d57/l5ebnuswwxm2qk157ohtd8ms9qxkom96.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">доходность недвижимости</span>
+<span class="al-card-date">22.04.2026</span>
+</div>
+<h2 class="al-card-title">Чистая и валовая доходность: в чем разница для инвестора</h2>
+<p class="al-card-text">Разбираем разницу между валовой и чистой доходностью недвижимости. Какие расходы учитывать, как проверять расчеты продавца и на какой показатель опираться при выборе объекта для инвестиций.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="доходность недвижимости,инвестиции в недвижимость,аренда в Крыму,расчет доходности,чистый доход,операционные расходы" href="kak-pravilno-schitat-dohodnost-nedvizhimosti-v-krymu/index.html">
+<img alt="Как правильно считать доходность недвижимости в Крыму" class="al-card-img" src="../upload/iblock/dea/flqzpj681zss8n4i25xurhjetjzqi43c.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">доходность недвижимости</span>
+<span class="al-card-date">22.04.2026</span>
+</div>
+<h2 class="al-card-title">Как правильно считать доходность недвижимости в Крыму</h2>
+<p class="al-card-text">Разбираем пошаговый алгоритм расчета чистой доходности недвижимости в Крыму: от полной стоимости входа до сценарного анализа с учетом сезонности, простоев и всех операционных расходов.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="инвестиции в недвижимость,недвижимость Крыма,план инвестора,проверка объекта,сделка с недвижимостью" href="poshagovyj-plan-investora-na-12-mesyacev/index.html">
+<img alt="Пошаговый план инвестора в недвижимость Крыма на 12 месяцев" class="al-card-img" src="../upload/iblock/d26/dhtr0prfjmj8iutfy1g3z42ce98jnsyn.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">инвестиции в недвижимость</span>
+<span class="al-card-date">22.04.2026</span>
+</div>
+<h2 class="al-card-title">Пошаговый план инвестора в недвижимость Крыма на 12 месяцев</h2>
+<p class="al-card-text">Практичный план инвестора в недвижимость Крыма на 12 месяцев: от постановки цели и выбора стратегии до проверки объекта, оформления сделки и подготовки сценария выхода. Без обещаний доходности — только проверенная логика действий.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="рынок недвижимости Крыма,цены на недвижимость 2026,спрос на недвижимость,анализ рынка Крыма,первичный рынок,вторичный рынок,ликвидность недвижимости" href="rynok-nedvizhimosti-kryma-v-2026-ceny-i-spros/index.html">
+<img alt="Рынок недвижимости Крыма в 2026 году: что происходит с ценами и спросом" class="al-card-img" src="../upload/iblock/cd2/19oqtbp04i71qpwvi23s6969zyq3mqri.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">рынок недвижимости Крыма</span>
+<span class="al-card-date">22.04.2026</span>
+</div>
+<h2 class="al-card-title">Рынок недвижимости Крыма в 2026 году: что происходит с ценами и спросом</h2>
+<p class="al-card-text">Разбираем рынок недвижимости Крыма в 2026 году: как правильно оценивать цены и спрос, что проверить перед покупкой и какие факторы реально влияют на ликвидность объектов.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+<a class="al-card" data-tags="инвестиции в недвижимость,стратегия инвестирования,ошибки инвесторов,недвижимость в Крыму,инвестиционная стратегия" href="oshibki-vybora-investicionnoy-strategii-v-krymu/index.html">
+<img alt="Ошибки выбора инвестиционной стратегии в Крыму: что приводит к потерям" class="al-card-img" src="../upload/iblock/96c/11xbfy8c74txwh3q3yo8iyq9ec59cnh4.jpg"/>
+<div class="al-card-body">
+<div class="al-card-meta">
+<span class="al-card-tag">инвестиции в недвижимость</span>
+<span class="al-card-date">20.04.2026</span>
+</div>
+<h2 class="al-card-title">Ошибки выбора инвестиционной стратегии в Крыму: что приводит к потерям</h2>
+<p class="al-card-text">Разбираем главные ошибки частных инвесторов при выборе стратегии инвестирования в недвижимость Крыма. Почему потери начинаются еще до покупки объекта и как правильно проверить цель, срок, бюджет и сценарий выхода.</p>
+<span class="al-card-cta">Читать →</span>
+</div>
+</a>
+</div>
+<div class="al-more-wrap">
+<button class="al-more-btn" id="al-more-btn" style="" type="button">
+                    Показать ещё
+                </button>
+<p class="al-more-count" id="al-more-count">
+                    Показано <span id="al-shown">9</span> из <span id="al-total">196</span>
+</p>
+</div>
+</div>
+<aside class="p-sidebar">
+<div class="p-sb-cta">
+<h3>Нужна консультация?</h3>
+<p>Эксперт подберёт лучший вариант под ваш бюджет и цель</p>
+<a class="p-sb-btn" href="../contacts/index.html">Получить подборку</a>
+<p class="p-sb-cta-free">Бесплатно</p>
+</div>
+<div class="p-sb-useful">
+<h4>Популярные темы</h4>
+<a href="javascript:void(0)" onclick="filterTag('инвестиции в недвижимость')">инвестиции в недвижимость</a>
+<a href="javascript:void(0)" onclick="filterTag('доходность объекта')">доходность объекта</a>
+<a href="javascript:void(0)" onclick="filterTag('валовая доходность')">валовая доходность</a>
+<a href="javascript:void(0)" onclick="filterTag('чистая доходность')">чистая доходность</a>
+</div>
+</aside>
+</div>
+</div>
+<script>
+const BATCH = 9;
+const grid = document.getElementById('al-grid');
+const totalArticles = grid ? parseInt(grid.dataset.total || '0', 10) : 0;
+let activeTag = 'all';
+let shown = BATCH;
+let nextPage = 2;
+
+function getCards() {
+    return Array.from(document.querySelectorAll('#al-grid .al-card'));
+}
+
+function getFiltered() {
+    const all = getCards();
+    if (activeTag === 'all') {
+        return all;
+    }
+    return all.filter(c => {
+        const tags = (c.dataset.tags || '').split(',').map(t => t.trim());
+        return tags.includes(activeTag);
+    });
+}
+
+function updateCounter() {
+    const elShown = document.getElementById('al-shown');
+    const elTotal = document.getElementById('al-total');
+    if (!elShown || !elTotal) {
+        return;
+    }
+    const visible = getCards().filter(c => c.style.display !== 'none').length;
+    elShown.textContent = String(visible);
+    elTotal.textContent = String(totalArticles);
+}
+
+function updateMoreBtn() {
+    const btn = document.getElementById('al-more-btn');
+    if (!btn) {
+        return;
+    }
+    if (activeTag === 'all') {
+        const loaded = getCards().length;
+        const needServer = loaded < totalArticles;
+        btn.style.display = needServer ? 'inline-block' : 'none';
+    } else {
+        const filtered = getFiltered();
+        btn.style.display = filtered.length > shown ? 'inline-block' : 'none';
+    }
+}
+
+function renderCards() {
+    const all = getCards();
+    if (activeTag === 'all') {
+        all.forEach(c => { c.style.display = 'flex'; });
+    } else {
+        const filtered = getFiltered();
+        all.forEach(c => { c.style.display = 'none'; });
+        filtered.slice(0, shown).forEach(c => { c.style.display = 'flex'; });
+    }
+    updateMoreBtn();
+    updateCounter();
+}
+
+function filterTag(tag) {
+    activeTag = tag;
+    shown = BATCH;
+    document.querySelectorAll('.al-tag-btn').forEach(b => {
+        b.classList.toggle('active', b.dataset.tag === tag);
+    });
+    renderCards();
+}
+
+document.querySelectorAll('.al-tag-btn').forEach(b => {
+    b.addEventListener('click', () => filterTag(b.dataset.tag));
+});
+
+const moreBtn = document.getElementById('al-more-btn');
+if (moreBtn && grid) {
+    moreBtn.addEventListener('click', async () => {
+        if (activeTag !== 'all') {
+            shown += BATCH;
+            renderCards();
+            return;
+        }
+        if (getCards().length >= totalArticles) {
+            return;
+        }
+        moreBtn.disabled = true;
+        try {
+            const r = await fetch('/articles/load-more.php?page=' + nextPage, {
+                credentials: 'same-origin',
+                headers: { 'X-Requested-With': 'XMLHttpRequest' },
+            });
+            const data = await r.json();
+            if (!data || !data.ok) {
+                return;
+            }
+            grid.insertAdjacentHTML('beforeend', data.html || '');
+            nextPage += 1;
+            if (!data.hasMore) {
+                moreBtn.style.display = 'none';
+            }
+            renderCards();
+        } catch (e) {
+            console.error(e);
+        } finally {
+            moreBtn.disabled = false;
+        }
+    });
+}
+
+renderCards();
+</script></div>
+<footer class="se-footer">
+<div class="se-footer__inner">
+<div class="se-footer__top">
+<div class="se-footer__brand">
+<a class="se-footer__logo" href="../index.html">
+<span aria-hidden="true" class="se-footer__badge">SE</span>
+<span class="se-footer__logo-text">
+<span class="se-footer__name">SMARTLINK ESTATE</span>
+<span class="se-footer__tagline">Экспертная недвижимость</span>
+</span>
+</a>
+<p class="se-footer__lead">
+					Подбираем недвижимость под цель: для жизни, инвестиций и роста капитала.
+					Сопровождаем сделку от заявки до ключей.
+				</p>
+<a class="se-footer__cta" href="../contacts/index.html">Получить подборку</a>
+</div>
+<nav aria-label="Каталог" class="se-footer__col">
+<div class="se-footer__col-title">Каталог</div>
+<ul class="se-footer__links">
+<li><a href="../index.html">Новостройки</a></li>
+<li><a href="index.html">Статьи</a></li>
+<li><a href="../contacts/index.html">Контакты</a></li>
+</ul>
+</nav>
+<nav aria-label="Покупателям" class="se-footer__col">
+<div class="se-footer__col-title">Покупателям</div>
+<ul class="se-footer__links">
+<li><a href="../contacts/index.html">Подбор квартиры</a></li>
+<li><a href="../contacts/index.html">Ипотека</a></li>
+<li><a href="../contacts/index.html">Консультация</a></li>
+</ul>
+</nav>
+<div class="se-footer__col">
+<div class="se-footer__col-title">Контакты</div>
+<ul class="se-footer__links se-footer__links--contacts">
+<li><a href="tel:+78000000000">8 (800) 000-00-00</a></li>
+<li><a href="mailto:info@smartlink-estate.ru">info@smartlink-estate.ru</a></li>
+<li><span class="se-footer__hours">Пн–Пт: 10:00–20:00</span></li>
+</ul>
+</div>
+</div>
+<div class="se-footer__bottom">
+<span class="se-footer__copy">© 2026 SMARTLINK ESTATE. Все права защищены.</span>
+<div class="se-footer__legal">
+<a href="../privacy/index.html">Политика конфиденциальности</a>
+<a href="../contacts/index.html">Реквизиты</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<style>
+/* Один сплошной фон секции, без градиентов и «пятен» */
+.se-footer{
+	margin-top:56px;
+	width:100%;
+	max-width:100%;
+	min-width:0;
+	box-sizing:border-box;
+	background:#f8fafc;
+	border-top:1px solid #e2e8f0;
+	color:#0f172a;
+}
+
+.se-footer__inner{
+	max-width:1240px;
+	margin:0 auto;
+	padding:48px 22px 28px;
+	width:100%;
+	box-sizing:border-box;
+}
+
+.se-footer__top{
+	display:grid;
+	grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(0,1fr));
+	gap:40px 32px;
+	align-items:start;
+}
+
+.se-footer__brand{
+	max-width:400px;
+}
+
+.se-footer__logo{
+	display:flex;
+	align-items:center;
+	gap:14px;
+	text-decoration:none;
+	color:inherit;
+	margin-bottom:18px;
+	transition:opacity .2s;
+}
+.se-footer__logo:hover{opacity:.88}
+
+.se-footer__badge{
+	width:44px;
+	height:44px;
+	border-radius:14px;
+	background:linear-gradient(145deg,#1d4ed8,#3b82f6);
+	color:#fff;
+	font-size:15px;
+	font-weight:900;
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	box-shadow:0 4px 14px rgba(37,99,235,.35);
+	flex-shrink:0;
+}
+
+.se-footer__logo-text{display:flex;flex-direction:column;gap:2px}
+.se-footer__name{
+	font-size:17px;
+	font-weight:900;
+	letter-spacing:.04em;
+	line-height:1.15;
+}
+.se-footer__tagline{
+	font-size:12px;
+	font-weight:600;
+	color:#64748b;
+	letter-spacing:.02em;
+}
+
+.se-footer__lead{
+	margin:0 0 22px;
+	font-size:14px;
+	line-height:1.75;
+	color:#475569;
+}
+
+.se-footer__cta{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	padding:12px 22px;
+	border-radius:999px;
+	background:#2563eb;
+	color:#fff;
+	font-size:14px;
+	font-weight:800;
+	text-decoration:none;
+	transition:transform .2s,box-shadow .2s,background .2s;
+	box-shadow:0 4px 16px rgba(37,99,235,.28);
+}
+.se-footer__cta:hover{
+	background:#1d4ed8;
+	transform:translateY(-1px);
+	box-shadow:0 8px 24px rgba(37,99,235,.35);
+}
+
+.se-footer__col-title{
+	font-size:11px;
+	font-weight:800;
+	text-transform:uppercase;
+	letter-spacing:.12em;
+	color:#94a3b8;
+	margin:0 0 16px;
+}
+
+.se-footer__links{
+	list-style:none;
+	margin:0;
+	padding:0;
+	display:flex;
+	flex-direction:column;
+	gap:4px;
+}
+
+.se-footer__links a{
+	display:inline-flex;
+	align-items:center;
+	gap:6px;
+	padding:6px 0;
+	font-size:14px;
+	font-weight:600;
+	color:#334155;
+	text-decoration:none;
+	transition:color .18s,transform .18s;
+	border-radius:6px;
+}
+.se-footer__links a:hover{
+	color:#2563eb;
+	transform:translateX(3px);
+}
+
+.se-footer__links--contacts a{font-weight:700;color:#1e293b}
+.se-footer__hours{
+	display:block;
+	padding:6px 0;
+	font-size:14px;
+	font-weight:500;
+	color:#64748b;
+}
+
+.se-footer__bottom{
+	margin-top:40px;
+	padding-top:22px;
+	border-top:1px solid #e2e8f0;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:16px;
+	flex-wrap:wrap;
+	font-size:13px;
+}
+
+.se-footer__copy{color:#94a3b8}
+
+.se-footer__legal{
+	display:flex;
+	gap:20px;
+	flex-wrap:wrap;
+}
+.se-footer__legal a{
+	color:#64748b;
+	text-decoration:none;
+	font-weight:600;
+	transition:color .18s;
+}
+.se-footer__legal a:hover{color:#2563eb}
+
+@media (max-width:1024px){
+	.se-footer__top{
+		grid-template-columns:1fr 1fr;
+	}
+	.se-footer__brand{
+		grid-column:1/-1;
+		max-width:none;
+	}
+}
+@media (max-width:640px){
+	.se-footer__inner{padding:36px 18px 22px}
+	.se-footer__top{
+		grid-template-columns:1fr;
+		gap:28px;
+	}
+	.se-footer__bottom{
+		flex-direction:column;
+		align-items:flex-start;
+	}
+}
+</style>
+</body>
+</html>

@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<title>О компании — BEREGA</title>
+<meta content="BEREGA — бюро крымской недвижимости. Локальная экспертиза, инвестиции у моря, честный отбор объектов, сопровождение сделки." name="description"/>
+<link href="../favicon.png" rel="shortcut icon" type="image/png"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<link href="../local/templates/berega/libs/bootstrap/bootstrap-grid.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/libs/fancybox/jquery.fancybox.min.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/libs/slick/slick.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/css/fonts.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/css/main.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/css/media.css" rel="stylesheet" type="text/css"/>
+<link href="../local/templates/berega/css/app.css" rel="stylesheet" type="text/css"/>
+<style>
+/* ─── О компании: страничные стили поверх UI-Kit ─── */
+
+/* Хлебные крошки */
+.about-breadcrumbs {
+  padding: 20px 0 0;
+}
+
+/* ─── Hero-секция страницы «О компании» ─── */
+.about-hero-screen {
+  padding-bottom: 60px;
+  background: #fff;
+}
+.about-hero-inner {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: stretch;
+  padding-top: 40px;
+}
+/* Левая карточка — тёмная navy (= .card-dark-blue логика) */
+.about-hero-main {
+  background: #2F3855;
+  border-radius: 12px;
+  padding: 40px 44px 40px;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 32px;
+  position: relative;
+  overflow: hidden;
+}
+.about-hero-main::after {
+  content: "";
+  position: absolute;
+  right: -80px;
+  top: -80px;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  background: rgba(255,255,255,.04);
+  pointer-events: none;
+}
+.about-hero-main__eyebrow {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.6);
+  margin: 0 0 14px;
+}
+.about-hero-main__title {
+  margin: 0 0 20px;
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 34px;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #fff;
+}
+.about-hero-main__title mark {
+  background: none;
+  color: #FCDB66;
+}
+.about-hero-main__lead {
+  margin: 0;
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,.8);
+  max-width: 540px;
+}
+/* Правая колонка — 2 stat-карточки стопкой */
+.about-hero-side {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.about-hero-stat {
+  flex: 1;
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 8px;
+}
+.about-hero-stat__num {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 48px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #000;
+}
+.about-hero-stat__num span {
+  font-size: 24px;
+  font-weight: 300;
+  color: rgba(0,0,0,.5);
+}
+.about-hero-stat__label {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(0,0,0,.7);
+}
+
+/* ─── Сетка из 4 факт-карточек ─── */
+.about-facts-screen {
+  padding: 0 0 60px;
+  background: #fff;
+}
+.about-facts-grid {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+.about-fact-card {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.about-fact-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+.about-fact-card__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 46px;
+  color: #3D3C3F;
+}
+.about-fact-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+.about-fact-card__icon svg [stroke] {
+  stroke: currentColor;
+}
+/* Варианты карточек фактов — палитра UI-Kit */
+/* Первая карточка: акцент CTA (как pill-статистика на главной) */
+.about-fact-card--navy {
+  background: #A91F240D;
+  color: #0f172a;
+}
+.about-fact-card--navy .about-fact-card__icon {
+  background: #fff;
+  color: #A91F24;
+  box-shadow: 0 1px 0 rgba(169,31,36,.12);
+}
+.about-fact-card--navy .about-fact-card__num {
+  color: #A91F24;
+}
+.about-fact-card--navy .about-fact-card__num small {
+  color: rgba(169,31,36,.65);
+}
+.about-fact-card--navy .about-fact-card__text {
+  color: rgba(0,0,0,.7);
+}
+.about-fact-card--surface-blue {
+  background: #E6F3FF;
+}
+.about-fact-card--surface-blue .about-fact-card__icon {
+  background: #fff;
+  color: #2F3855;
+}
+.about-fact-card--surface-blue .about-fact-card__num {
+  color: #2F3855;
+}
+.about-fact-card--surface-blue .about-fact-card__num small {
+  color: rgba(47,56,85,.55);
+}
+.about-fact-card--surface-blue .about-fact-card__text {
+  color: rgba(0,0,0,.7);
+}
+/* Карточка «Офис» — светлая (не charcoal), чтобы не дублировать тёмные блоки */
+.about-fact-card--charcoal {
+  background: #F2F8FF;
+  color: #0f172a;
+}
+.about-fact-card--charcoal .about-fact-card__icon {
+  background: #fff;
+  color: #2F3855;
+  box-shadow: 0 1px 0 rgba(47,56,85,.08);
+}
+.about-fact-card--charcoal .about-fact-card__num {
+  color: #2F3855;
+}
+.about-fact-card--charcoal .about-fact-card__text {
+  color: rgba(0,0,0,.7);
+}
+.about-fact-card__num {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.1;
+  color: #000;
+  margin: 0;
+}
+.about-fact-card__num small {
+  font-size: 20px;
+  font-weight: 300;
+  color: rgba(0,0,0,.5);
+}
+.about-fact-card__text {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.5;
+  color: rgba(0,0,0,.7);
+  margin: 0;
+}
+/* Акцентная карточка факта: золотая */
+.about-fact-card--accent {
+  background: #FCDB66;
+}
+.about-fact-card--accent .about-fact-card__icon {
+  background: rgba(0,0,0,.08);
+  color: #3D3C3F;
+}
+.about-fact-card--accent .about-fact-card__num {
+  color: #3D3C3F;
+}
+.about-fact-card--accent .about-fact-card__text {
+  color: rgba(0,0,0,.7);
+}
+
+/* ─── Секция «Чем мы отличаемся» ─── */
+.about-diff-screen {
+  padding: 50px 0 60px;
+  background: #fff;
+}
+.about-diff-grid {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+}
+.about-diff-cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  margin-top: 0;
+}
+.about-diff-card {
+  background: #f8f8f8;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+.about-diff-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,.08);
+}
+.about-diff-card--dark {
+  background: #3D3C3F;
+  color: #fff;
+}
+.about-diff-card__num {
+  flex: 0 0 46px;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #fff;
+  color: #3D3C3F;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 1;
+}
+.about-diff-card--dark .about-diff-card__num {
+  background: rgba(255,255,255,.15);
+  color: #fff;
+}
+.about-diff-card__content {}
+.about-diff-card__title {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #000;
+  margin: 0 0 10px;
+}
+.about-diff-card--dark .about-diff-card__title {
+  color: #fff;
+}
+.about-diff-card__text {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0,0,0,.7);
+  margin: 0;
+}
+.about-diff-card--dark .about-diff-card__text {
+  color: rgba(255,255,255,.7);
+}
+
+/* ─── Секция «Кому мы полезны» ─── */
+.about-audience-screen {
+  padding: 50px 0 60px;
+  background: #f8f8f8;
+}
+.about-audience-grid {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.about-audience-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07);
+  transition: transform .2s ease;
+}
+.about-audience-card:hover {
+  transform: translateY(-2px);
+}
+.about-audience-card__tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  border-radius: 60px;
+  background: #A91F240D;
+  color: #A91F24;
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  align-self: flex-start;
+}
+.about-audience-card__title {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #000;
+  margin: 0;
+}
+.about-audience-card__text {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0,0,0,.7);
+  margin: 0;
+}
+.about-audience-card__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  border-top: 1px solid #e9edf3;
+  padding-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.about-audience-card__list li {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: rgba(0,0,0,.7);
+  padding-left: 16px;
+  position: relative;
+}
+.about-audience-card__list li::before {
+  content: '·';
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #A91F24;
+  font-size: 18px;
+  line-height: 1.1;
+}
+
+/* ─── Секция «Наши ценности» ─── */
+.about-values-screen {
+  padding: 50px 0 60px;
+  background: #fff;
+}
+.about-values-inner {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+}
+.about-values-block {
+  background: #3D3C3F;
+  border-radius: 12px;
+  padding: 50px 60px;
+  color: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1.2fr;
+  gap: 60px;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+}
+.about-values-block::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: .15;
+  border-radius: 8px;
+  background:
+    repeating-linear-gradient(to right, rgba(255,255,255,.11) 0 1px, transparent 1px 62px),
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.11) 0 1px, transparent 1px 62px);
+  pointer-events: none;
+}
+.about-values-block__title {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.3;
+  margin: 0 0 16px;
+  color: #fff;
+}
+.about-values-block__sub {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(255,255,255,.7);
+  margin: 0;
+}
+.about-values-list {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  position: relative;
+}
+.about-values-list li {
+  background: rgba(255,255,255,.07);
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 12px;
+  padding: 16px 18px;
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.about-values-list li::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #FCDB66;
+  flex: 0 0 8px;
+}
+
+/* ─── Секция «Как мы работаем» — шаги ─── */
+.about-steps-screen {
+  padding: 50px 0 60px;
+  background: #f8f8f8;
+}
+.about-steps-inner {
+  width: min(1220px, calc(100% - 40px));
+  margin: 0 auto;
+}
+.about-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 24px;
+}
+.about-step-card {
+  background: #fff;
+  border-radius: 12px;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 20px rgba(0,0,0,.07);
+}
+.about-step-card__num {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 40px;
+  font-weight: 300;
+  line-height: 1;
+  color: rgba(0,0,0,.15);
+  margin: 0;
+}
+.about-step-card__icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: #f8f8f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.about-step-card__icon svg {
+  width: 20px;
+  height: 20px;
+}
+.about-step-card__title {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.35;
+  color: #000;
+  margin: 0;
+}
+.about-step-card__text {
+  font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.6;
+  color: rgba(0,0,0,.7);
+  margin: 0;
+}
+
+/* ─── Адаптив ─── */
+@media (max-width: 1024px) {
+  .about-hero-inner { grid-template-columns: 1fr; }
+  .about-hero-side { flex-direction: row; }
+  .about-facts-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-diff-cards { grid-template-columns: 1fr; }
+  .about-audience-grid { grid-template-columns: 1fr; }
+  .about-values-block { grid-template-columns: 1fr; gap: 32px; padding: 36px 32px; }
+  .about-steps-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-hero-main__title { font-size: 28px; }
+}
+@media (max-width: 640px) {
+  .about-hero-side { flex-direction: column; }
+  .about-facts-grid { grid-template-columns: 1fr; }
+  .about-steps-grid { grid-template-columns: 1fr; }
+  .about-values-list { grid-template-columns: 1fr; }
+  .about-hero-main { padding: 28px 24px; }
+  .about-values-block { padding: 28px 24px; }
+}
+</style>
+<script src="../local/templates/berega/libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="../local/templates/berega/libs/slick/slick.min.js"></script>
+<script src="../local/templates/berega/libs/fancybox/jquery.fancybox.min.js"></script>
+<script src="../local/templates/berega/libs/mask/jquery.maskedinput.js"></script>
+<script src="../local/templates/berega/js/jquery.cookie.js"></script>
+<script src="../local/templates/berega/js/common.js"></script>
+<script src="../local/templates/berega/js/app.js"></script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport"/>
+<meta content="telephone=no" name="format-detection"/>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+</head>
+<body>
+<div class="page">
+
+<!-- Плавающее мобильное меню -->
+<div class="fixed-buttons">
+<a class="fixed-buttons__btn" href="../cases/index.html">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_886_299)"><path d="M7 5V2C7 1.73478 7.10536 1.48043 7.29289 1.29289C7.48043 1.10536 7.73478 1 8 1H16C16.2652 1 16.5196 1.10536 16.7071 1.29289C16.8946 1.48043 17 1.73478 17 2V5H21C21.2652 5 21.5196 5.10536 21.7071 5.29289C21.8946 5.48043 22 5.73478 22 6V20C22 20.2652 21.8946 20.5196 21.7071 20.7071C21.5196 20.8946 21.2652 21 21 21H3C2.73478 21 2.48043 20.8946 2.29289 20.7071C2.10536 20.5196 2 20.2652 2 20V6C2 5.73478 2.10536 5.48043 2.29289 5.29289C2.48043 5.10536 2.73478 5 3 5H7ZM4 16V19H20V16H4ZM4 14H20V7H4V14ZM9 3V5H15V3H9ZM11 11H13V13H11V11Z" fill="white" fill-opacity="0.7"></path></g><defs><clippath id="clip0_886_299"><rect fill="white" height="24" width="24"></rect></clippath></defs></svg>
+<span>Кейсы</span>
+</a>
+<a class="fixed-buttons__btn" href="../objects/index.html">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_886_294)"><path d="M21 20C21 20.2652 20.8946 20.5196 20.7071 20.7071C20.5196 20.8947 20.2652 21 20 21H4C3.73478 21 3.48043 20.8947 3.29289 20.7071C3.10536 20.5196 3 20.2652 3 20V9.49003C2.99989 9.33764 3.03462 9.18724 3.10152 9.05033C3.16841 8.91341 3.26572 8.79359 3.386 8.70003L11.386 2.47803C11.5615 2.34147 11.7776 2.26733 12 2.26733C12.2224 2.26733 12.4385 2.34147 12.614 2.47803L20.614 8.70003C20.7343 8.79359 20.8316 8.91341 20.8985 9.05033C20.9654 9.18724 21.0001 9.33764 21 9.49003V20ZM19 19V9.97803L12 4.53403L5 9.97803V19H19ZM7 15H17V17H7V15Z" fill="white" fill-opacity="0.7"></path></g><defs><clippath id="clip0_886_294"><rect fill="white" height="24" width="24"></rect></clippath></defs></svg>
+<span>Объекты</span>
+</a>
+<a class="fixed-buttons__btn" href="#">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_886_304)"><path d="M4 2H20C20.2652 2 20.5196 2.10536 20.7071 2.29289C20.8946 2.48043 21 2.73478 21 3V22.276C21.0001 22.3594 20.9793 22.4416 20.9395 22.5149C20.8997 22.5882 20.8422 22.6505 20.7722 22.6959C20.7023 22.7413 20.622 22.7685 20.5388 22.775C20.4557 22.7815 20.3722 22.767 20.296 22.733L12 19.03L3.704 22.732C3.6279 22.766 3.54451 22.7805 3.46141 22.774C3.37831 22.7676 3.29813 22.7405 3.22818 22.6952C3.15822 22.6499 3.1007 22.5878 3.06085 22.5146C3.021 22.4414 3.00008 22.3593 3 22.276V3C3 2.73478 3.10536 2.48043 3.29289 2.29289C3.48043 2.10536 3.73478 2 4 2ZM19 19.965V4H5V19.965L12 16.841L19 19.965ZM12 13.5L9.061 15.045L9.622 11.773L7.245 9.455L10.531 8.977L12 6L13.47 8.977L16.755 9.455L14.378 11.773L14.938 15.045L12 13.5Z" fill="white" fill-opacity="0.7"></path></g><defs><clippath id="clip0_886_304"><rect fill="white" height="24" width="24"></rect></clippath></defs></svg>
+<span>Моя подборка</span>
+</a>
+<div class="fixed-buttons__btn btn-menu">
+<svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#clip0_886_314)"><path d="M3 4H21V6H3V4ZM3 11H21V13H3V11ZM3 18H21V20H3V18Z" fill="white" fill-opacity="0.7"></path></g><defs><clippath id="clip0_886_314"><rect fill="white" height="24" width="24"></rect></clippath></defs></svg>
+<span>Меню</span>
+</div>
+</div>
+
+<!-- Хедер — эталон из index.html -->
+<header class="hero-header">
+<div class="container">
+<div class="hero-header__inner">
+<a class="hero-logo" href="../index.html">
+<img alt="BEREGA" class="hero-logo__img" src="../local/templates/berega/img/logo.svg"/>
+<span class="hero-logo__sub">Бюро недвижимости</span>
+</a>
+<div class="menu-overlay"></div>
+<nav aria-label="Основная навигация" class="hero-nav">
+<a href="../cases/index.html">Кейсы</a>
+<a href="../objects/index.html">Объекты</a>
+<a href="../news/index.html">Статьи</a>
+<a class="selected" href="index.html">О компании</a>
+<a href="../contacts/index.html">Контакты</a>
+<div class="hero-nav__close"><svg viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M193.94 256L296.5 153.44l21.15-21.15c3.12-3.12 3.12-8.19 0-11.31l-22.63-22.63c-3.12-3.12-8.19-3.12-11.31 0L160 222.06 36.29 98.34c-3.12-3.12-8.19-3.12-11.31 0L2.34 120.97c-3.12 3.12-3.12 8.19 0 11.31L126.06 256 2.34 379.71c-3.12 3.12-3.12 8.19 0 11.31l22.63 22.63c3.12 3.12 8.19 3.12 11.31 0L160 289.94 262.56 392.5l21.15 21.15c3.12 3.12 8.19 3.12 11.31 0l22.63-22.63c3.12-3.12 3.12-8.19 0-11.31L193.94 256z"></path></svg></div>
+</nav>
+<div class="hero-phone">
+<a class="hero-phone__icon fancybox" href="#callback"><img alt="alt" aria-hidden="true" class="hero-phone__icon-img" src="../local/templates/berega/img/phone.svg"/></a>
+<span class="hero-phone__meta">
+<a class="hero-phone__number" href="tel:+79781234567" rel="nofollow">+7 (978) 123-45-67</a>
+<span class="hero-phone__hint"><span aria-hidden="true" class="hero-phone__dot"></span>Звоните, Пн-Пт 9-18</span>
+</span>
+</div>
+</div>
+</div>
+</header>
+
+<main>
+
+<!-- ─── 1. Хлебные крошки + Hero ─── -->
+<section class="about-hero-screen">
+<div class="container">
+<ul class="breadcrumbs about-breadcrumbs" itemprop="http://schema.org/breadcrumb" itemscope="" itemtype="http://schema.org/BreadcrumbList">
+<li class="breadcrumbs__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+<a href="../index.html" itemprop="item" title="Главная">Главная</a>
+<meta content="1" itemprop="position"/>
+</li>
+<li class="breadcrumbs__item" itemprop="itemListElement" itemscope="" itemtype="http://schema.org/ListItem">
+<span itemprop="name">О компании</span>
+<meta content="2" itemprop="position"/>
+</li>
+</ul>
+</div>
+
+<div class="about-hero-inner">
+<!-- Левая тёмная карточка -->
+<div class="about-hero-main">
+<div>
+<div class="about-hero-main__eyebrow">О бюро BEREGA</div>
+<h1 class="about-hero-main__title">Бюро курортной недвижимости Крыма для тех, кто <mark>считает цифры</mark></h1>
+<p class="about-hero-main__lead">Помогаем сохранить и приумножить капитал через инвестиции в недвижимость на берегу Чёрного моря. Локальная экспертиза, проверка застройщика, юридически чистые сделки по ФЗ-214 и сопровождение от запроса до ключей.</p>
+</div>
+<a class="btn-main fancybox" href="#callback" style="width:fit-content;height:56px;padding:0 32px;font-size:15px;">Получить инвест-подборку</a>
+</div>
+<!-- Правые стат-карточки -->
+<div class="about-hero-side">
+<div class="about-hero-stat">
+<div class="about-hero-stat__num">15 <span>лет</span></div>
+<div class="about-hero-stat__label">в Крыму. Живём, работаем и инвестируем здесь</div>
+</div>
+<div class="about-hero-stat">
+<div class="about-hero-stat__num">1,2<span>+ млрд ₽</span></div>
+<div class="about-hero-stat__label">инвестировали в курортную недвижимость с нашими клиентами</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ─── 2. 4 факт-карточки ─── -->
+<section class="about-facts-screen">
+<div class="about-facts-grid">
+
+<div class="about-fact-card about-fact-card--navy">
+<div class="about-fact-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1L2 5v5c0 4.418 3.582 8 8 8s8-3.582 8-8V5L10 1z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>
+</div>
+<p class="about-fact-card__num">100<small>+</small></p>
+<p class="about-fact-card__text">инвестиционных сделок с клиентами</p>
+</div>
+
+<div class="about-fact-card about-fact-card--surface-blue">
+<div class="about-fact-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="7" width="16" height="11" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M6 7V5a4 4 0 018 0v2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</div>
+<p class="about-fact-card__num">20<small>+</small></p>
+<p class="about-fact-card__text">объектов в личном инвест-портфеле основателя</p>
+</div>
+
+<div class="about-fact-card about-fact-card--accent">
+<div class="about-fact-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2,14 7,9 11,12 18,5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14,5 18,5 18,9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<p class="about-fact-card__num">+48,78<small>%</small></p>
+<p class="about-fact-card__text">средний прирост капитала клиентов за 12 месяцев</p>
+</div>
+
+<div class="about-fact-card about-fact-card--charcoal">
+<div class="about-fact-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 11a4 4 0 100-8 4 4 0 000 8z" stroke="currentColor" stroke-width="1.5"/><path d="M2 18c0-3.314 3.582-6 8-6s8 2.686 8 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+</div>
+<p class="about-fact-card__num">Офис</p>
+<p class="about-fact-card__text">в Симферополе. Офлайн и онлайн-экскурсии по объектам</p>
+</div>
+
+</div>
+</section>
+
+<!-- ─── 3. Чем мы отличаемся ─── -->
+<section class="about-diff-screen">
+<div class="about-diff-grid">
+<div class="row">
+<div class="col-12">
+<h2 class="title-section">Чем мы отличаемся от остальных</h2>
+</div>
+<div class="col-12">
+<div class="about-diff-cards">
+
+<div class="about-diff-card about-diff-card--dark">
+<div class="about-diff-card__num">1</div>
+<div class="about-diff-card__content">
+<h3 class="about-diff-card__title">Радикальная честность</h3>
+<p class="about-diff-card__text">Открыто говорим о минусах популярных ЖК. Можем отговорить от покупки, если объект не проходит по вашим критериям и расчёту. Это не выгодно в моменте — но строит доверие на годы.</p>
+</div>
+</div>
+
+<div class="about-diff-card">
+<div class="about-diff-card__num">2</div>
+<div class="about-diff-card__content">
+<h3 class="about-diff-card__title">Глубокая локальная экспертиза</h3>
+<p class="about-diff-card__text">Знаем нюансы, которых нет в рекламных буклетах: розу ветров, реальную готовность инфраструктуры, скрытые коммунальные платежи и риски конкретных локаций.</p>
+</div>
+</div>
+
+<div class="about-diff-card">
+<div class="about-diff-card__num">3</div>
+<div class="about-diff-card__content">
+<h3 class="about-diff-card__title">Проводник, а не продавец</h3>
+<p class="about-diff-card__text">Помогаем сравнить сценарии, цифры и правовую чистоту, чтобы решение осталось за вами — на фактах, а не на эмоциях. Без давления, без «горящих предложений».</p>
+</div>
+</div>
+
+<div class="about-diff-card">
+<div class="about-diff-card__num">4</div>
+<div class="about-diff-card__content">
+<h3 class="about-diff-card__title">Фокус на ФЗ-214 и чистоте сделки</h3>
+<p class="about-diff-card__text">Работаем с объектами, где можно опереться на прозрачные основания. Сопровождение на всех этапах: от проверки застройщика до подписания и регистрации.</p>
+</div>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ─── 4. Основатель (эталон из index.html) ─── -->
+<section class="founder-screen">
+<div class="founder-screen__inner container">
+<div class="founder-main">
+<picture>
+<source media="(max-width: 991px)" srcset="https://devbitrix.sheer26.ru/local/templates/berega/img/founder-person_mob.jpg"/>
+<img alt="Руслан Авчинников" class="founder-main__person" src="https://devbitrix.sheer26.ru/local/templates/berega/img/founder-person.png"/>
+</picture>
+<div class="founder-main__content">
+<div class="founder-main__intro">
+<div>
+<h3 class="founder-main__name">Руслан Авчинников</h3>
+<p class="founder-main__role">Основатель бюро недвижимости</p>
+</div>
+<ul class="founder-main__list">
+<li>Живёт, работает и инвестирует исключительно в Крыму</li>
+<li>Спикер профессиональных мероприятий рынка недвижимости</li>
+</ul>
+</div>
+<div class="founder-main__quote">
+<img alt="alt" class="founder-main__quote-icon" src="../local/templates/berega/img/quote-icon.svg"/>
+<p class="founder-main__quote-text">«Если объект не проходит по расчёту доходности — мы его не предлагаем, даже если он выглядит привлекательно»</p>
+</div>
+</div>
+<img alt="подпись" class="founder-main__sign" src="https://devbitrix.sheer26.ru/local/templates/berega/img/founder-signature.png"/>
+</div>
+<div class="founder-side founder-side--stats">
+<div class="founder-side__stats">
+<div class="founder-side__num">20+</div>
+<div class="founder-side__label">объектов в личном инвест-портфеле</div>
+<div class="founder-side__num">100+</div>
+<div class="founder-side__label">инвестиционных сделок с клиентами</div>
+</div>
+</div>
+<div class="founder-side founder-side--role">
+<h3 class="founder-side__title">Роль в бюро</h3>
+<ul class="founder-side__list">
+<li>Лично утверждаю инвестиционные сценарии</li>
+<li>Курирую анализ объектов и проверку застройщика</li>
+<li>Согласовываю расчёты совместно с аналитиком</li>
+</ul>
+</div>
+<iframe allow="autoplay; fullscreen; picture-in-picture" allowfullscreen="" class="founder-video__frame" src="https://rutube.ru/play/embed/e4daa3f1d367f373c56a5b9423a24845"></iframe>
+</div>
+</section>
+
+<!-- ─── 5. Кому мы полезны ─── -->
+<section class="about-audience-screen">
+<div class="container">
+<div class="row">
+<div class="col-12">
+<h2 class="title-section">Кому мы полезны</h2>
+</div>
+<div class="col-12">
+<div class="about-audience-grid">
+
+<div class="about-audience-card">
+<span class="about-audience-card__tag">Инвестор</span>
+<h3 class="about-audience-card__title">Капитал и доходность</h3>
+<p class="about-audience-card__text">35–55 лет, бюджет 10–30 млн ₽. Цель — ROI 9%+, пассивный доход или перепродажа через 1–2 года.</p>
+<ul class="about-audience-card__list">
+<li>Подборка с расчётом доходности</li>
+<li>Дистанционное оформление сделки</li>
+<li>Управляющая компания и аренда</li>
+</ul>
+</div>
+
+<div class="about-audience-card">
+<span class="about-audience-card__tag">Семья</span>
+<h3 class="about-audience-card__title">Своё у моря + аренда</h3>
+<p class="about-audience-card__text">35–60 лет, дети. Жильё для отдыха с возможностью сдавать в высокий сезон.</p>
+<ul class="about-audience-card__list">
+<li>Готовый ремонт и меблировка</li>
+<li>Пешком до пляжа и инфраструктуры</li>
+<li>Прозрачная управляющая компания</li>
+</ul>
+</div>
+
+<div class="about-audience-card">
+<span class="about-audience-card__tag">Брокер</span>
+<h3 class="about-audience-card__title">Партнёрская витрина</h3>
+<p class="about-audience-card__text">Региональные брокеры, которым нужны решения для клиентов «на юге». Берём на себя локальную экспертизу.</p>
+<ul class="about-audience-card__list">
+<li>Готовая витрина объектов</li>
+<li>Материалы и сопровождение</li>
+<li>Процент от закрытых сделок</li>
+</ul>
+</div>
+
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ─── 6. Наши ценности ─── -->
+<section class="about-values-screen">
+<div class="about-values-inner">
+<div class="row">
+<div class="col-12">
+<h2 class="title-section">Наши ценности</h2>
+</div>
+</div>
+<div class="about-values-block">
+<div>
+<h3 class="about-values-block__title">Честность, экспертиза и забота — не маркетинг, а рабочие критерии</h3>
+<p class="about-values-block__sub">Если ценность входит в противоречие с быстрой прибылью, мы выбираем ценность. Так бюро держится на длинной дистанции.</p>
+</div>
+<ul class="about-values-list">
+<li>Локальная экспертиза по Крыму</li>
+<li>Прозрачность цифр и расчётов</li>
+<li>Бережное сопровождение клиента</li>
+<li>Инвестиционный фокус, а не «впарить»</li>
+<li>Цифровая открытость процесса</li>
+<li>Ответственность за результат</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- ─── 7. Команда ─── -->
+<section class="team-screen">
+<div class="container">
+<h2 class="title-section">Команда, отвечающая за Ваши инвестиции</h2>
+<div class="slider-four">
+<div>
+<div class="team-card">
+<img alt="Евгения Кашкова" class="team-card__photo" src="https://devbitrix.sheer26.ru/upload/iblock/4d4/hqvq7zc331z1n3apt3d3ao3q0onqipd6.jpg"/>
+<button aria-hidden="true" class="team-card__plus" type="button">+</button>
+<div class="team-card__body">
+<h3 class="team-card__name">Евгения Кашкова</h3>
+<p class="team-card__role">Эксперт по курортной недвижимости</p>
+<span aria-hidden="true" class="team-card__line"></span>
+<ul class="team-card__list">
+<li>Курирует анализ объектов и проверку застройщика</li>
+<li>Составляет инвест-расчёты совместно с аналитиком</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<div class="team-card">
+<img alt="Иван Петров" class="team-card__photo" src="https://devbitrix.sheer26.ru/upload/iblock/405/t4qpewgdfhajn32zn9bffugr6w82gmvl.jpg"/>
+<button aria-hidden="true" class="team-card__plus" type="button">+</button>
+<div class="team-card__body">
+<h3 class="team-card__name">Иван Петров</h3>
+<p class="team-card__role">Руководитель направления продаж</p>
+<span aria-hidden="true" class="team-card__line"></span>
+<ul class="team-card__list">
+<li>Отвечает за стратегию входа и сценарии сделки</li>
+<li>Сопровождает клиента до выхода на договор</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<div class="team-card">
+<img alt="Мария Смирнова" class="team-card__photo" src="https://devbitrix.sheer26.ru/upload/iblock/884/d9t7uv9mdiwe4jnurmtisu15rll3vwbs.jpg"/>
+<button aria-hidden="true" class="team-card__plus" type="button">+</button>
+<div class="team-card__body">
+<h3 class="team-card__name">Мария Смирнова</h3>
+<p class="team-card__role">Эксперт по инвест-проектам</p>
+<span aria-hidden="true" class="team-card__line"></span>
+<ul class="team-card__list">
+<li>Считает доходность по каждому сценарию покупки</li>
+<li>Помогает выбрать проект под цель и горизонт</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<div class="team-card">
+<img alt="Анна Волкова" class="team-card__photo" src="https://devbitrix.sheer26.ru/upload/iblock/96e/unhjnxhby9tfn4u15luday1wpm1zg7nj.jpg"/>
+<button aria-hidden="true" class="team-card__plus" type="button">+</button>
+<div class="team-card__body">
+<h3 class="team-card__name">Анна Волкова</h3>
+<p class="team-card__role">Руководитель клиентского сервиса</p>
+<span aria-hidden="true" class="team-card__line"></span>
+<ul class="team-card__list">
+<li>Координирует процесс сделки и взаимодействие сторон</li>
+<li>Контролирует сроки и качество клиентского пути</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ─── 8. Как мы работаем — 6 шагов ─── -->
+<section class="about-steps-screen">
+<div class="about-steps-inner">
+<div class="row">
+<div class="col-12">
+<h2 class="title-section">Как мы работаем с клиентом</h2>
+</div>
+</div>
+<div class="about-steps-grid">
+
+<div class="about-step-card">
+<p class="about-step-card__num">01</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M2 4h16v10a2 2 0 01-2 2H4a2 2 0 01-2-2V4z" stroke="#3D3C3F" stroke-width="1.5" stroke-linejoin="round"/><path d="M2 4l8 7 8-7" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Понимаем цель</h3>
+<p class="about-step-card__text">Звонок или встреча: бюджет, горизонт, стратегия (рост капитала / аренда / перепродажа), уровень участия.</p>
+</div>
+
+<div class="about-step-card">
+<p class="about-step-card__num">02</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><polyline points="2,14 7,9 11,12 18,5" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><polyline points="14,5 18,5 18,9" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Считаем сценарии</h3>
+<p class="about-step-card__text">3 инвестиционных сценария под вашу сумму. Доходность, сроки, логика выхода — на цифрах, а не на обещаниях.</p>
+</div>
+
+<div class="about-step-card">
+<p class="about-step-card__num">03</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10 1L2 5v5c0 4.418 3.582 8 8 8s8-3.582 8-8V5L10 1z" stroke="#3D3C3F" stroke-width="1.5" stroke-linejoin="round"/><path d="M7 10l2 2 4-4" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Проверяем объект</h3>
+<p class="about-step-card__text">Юридическая чистота, ФЗ-214, репутация застройщика, реальное состояние стройки, инфраструктура.</p>
+</div>
+
+<div class="about-step-card">
+<p class="about-step-card__num">04</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M4 3h12a1 1 0 011 1v12a1 1 0 01-1 1H4a1 1 0 01-1-1V4a1 1 0 011-1z" stroke="#3D3C3F" stroke-width="1.5"/><path d="M7 7h6M7 10h6M7 13h3" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Сопровождаем сделку</h3>
+<p class="about-step-card__text">Бронь, договор, оплата, регистрация. Дистанционно или офлайн в офисе в Симферополе.</p>
+</div>
+
+<div class="about-step-card">
+<p class="about-step-card__num">05</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="#3D3C3F" stroke-width="1.5"/><path d="M7 10l2 2 4-4" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Доводим до ключей</h3>
+<p class="about-step-card__text">Контролируем сроки строительства, приёмку, замечания. Помогаем с ремонтом и УК для сдачи в аренду.</p>
+</div>
+
+<div class="about-step-card">
+<p class="about-step-card__num">06</p>
+<div class="about-step-card__icon">
+<svg fill="none" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><circle cx="10" cy="10" r="8" stroke="#3D3C3F" stroke-width="1.5"/><path d="M10 6v4l3 3" stroke="#3D3C3F" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</div>
+<h3 class="about-step-card__title">Считаем выход</h3>
+<p class="about-step-card__text">Когда захотите — поможем зафиксировать прибыль через перепродажу или перевести объект в аренду.</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<!-- ─── 9. Финальная форма (эталон из index.html) ─── -->
+<section class="scenario-screen scenario-screen--final">
+<div class="container">
+<div class="scenario-screen__inner">
+<div aria-hidden="true" class="scenario-screen__grid"></div>
+<div class="scenario-screen__header">
+<h2 class="title-section">Готовы рассчитать стратегию под свою сумму?</h2>
+<p class="scenario-screen__subtitle">Подборка объектов и финансовая модель с цифрами и сроками</p>
+</div>
+<div id="scenario-form-final-wrap">
+<form action="#" class="scenario-form" method="post">
+<div class="scenario-form__group">
+<input aria-label="Телефон" class="scenario-input input-phone" name="phone_final" placeholder="Ваш телефон" required="" type="tel"/>
+<select class="scenario-input" required="">
+<option disabled="" selected="" value="">Бюджет</option>
+<option value="1">10-20 млн ₽</option>
+<option value="2">20-40 млн ₽</option>
+<option value="3">от 40 млн ₽</option>
+</select>
+</div>
+<input class="btn-main" type="submit" value="Получить 3 инвестиционных сценария"/>
+<div class="checkbox">
+<label>
+<input checked="" required="" type="checkbox"/>
+<span>Выражаю <a href="../soglasie/index.html">согласие</a> на обработку моих персональных данных в соответствии с <a href="../policy/index.html">Политикой обработки персональных данных</a></span>
+</label>
+</div>
+</form>
+</div>
+<div aria-hidden="true" class="scenario-media">
+<img alt="alt" class="scenario-media__main" src="https://devbitrix.sheer26.ru/local/templates/berega/img/scenario-chart-main.png"/>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+
+<!-- Футер — эталон из index.html -->
+<footer class="site-footer">
+<div class="site-footer__inner container">
+<div class="site-footer__top">
+<div class="site-footer__col">
+<div class="footer__left">
+<div class="footer__top">
+<a class="site-footer__brand" href="../index.html">
+<img alt="BEREGA" class="site-footer__brand-logo" src="../local/templates/berega/img/logo.svg"/>
+<span class="site-footer__brand-sub">Бюро недвижимости</span>
+</a>
+<a class="hero-phone" href="tel:+79781234567" rel="nofollow">
+<span class="hero-phone__icon"><img alt="alt" aria-hidden="true" class="hero-phone__icon-img" src="../local/templates/berega/img/phone.svg"/></span>
+<span class="hero-phone__meta">
+<span class="hero-phone__number">+7 (978) 123-45-67</span>
+<span class="hero-phone__hint"><span aria-hidden="true" class="hero-phone__dot"></span>Звоните, Пн-Пт 9-18</span>
+</span>
+</a>
+</div>
+<div class="site-footer__legal">
+<span class="site-footer__legal-line">ИП Авчинников Р. В.</span>
+<span class="site-footer__legal-line">ИНН 910207214585</span>
+<span class="site-footer__legal-line">ОГРНИП 319911200072827</span>
+</div>
+</div>
+</div>
+<div class="site-footer__col">
+<h3 class="site-footer__col-title">Объекты <div class="footer-arrow"><svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12.0001 14.9998L7.75708 10.7568L9.17208 9.34277L12.0001 12.1718L14.8281 9.34277L16.2431 10.7568L12.0001 14.9998Z" fill="black"></path></svg></div></h3>
+<div class="footer__content">
+<div class="site-footer__links">
+<a href="#">Ботаника</a>
+<a href="#">Дарсан</a>
+<a href="#">Западная</a>
+<a href="#">Италика</a>
+<a href="#">Мойнако</a>
+</div>
+</div>
+</div>
+<div class="site-footer__col">
+<h3 class="site-footer__col-title">Кейсы <div class="footer-arrow"><svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M12.0001 14.9998L7.75708 10.7568L9.17208 9.34277L12.0001 12.1718L14.8281 9.34277L16.2431 10.7568L12.0001 14.9998Z" fill="black"></path></svg></div></h3>
+<div class="footer__content">
+<div class="site-footer__links">
+<a href="#">Сделка 1</a>
+<a href="#">Сделка 2</a>
+<a href="#">Сделка 3</a>
+<a href="#">Сделка 4</a>
+<a href="#">Сделка 5</a>
+</div>
+</div>
+</div>
+<div class="site-footer__col site-footer__menu">
+<div class="site-footer__links">
+<a href="index.html">О компании</a>
+<a href="../news/index.html">Статьи</a>
+<a href="#">Видео</a>
+<a href="#">Подкасты</a>
+<a href="../contacts/index.html">Контакты</a>
+</div>
+</div>
+<div class="site-footer__contacts">
+<a class="site-footer__phone" href="tel:+79781234567" rel="nofollow">+7 (978) 123-45-67</a>
+<div class="site-footer__legal">
+<span class="site-footer__legal-line">ИП Авчинников Р. В.</span>
+<span class="site-footer__legal-line">ИНН 910207214585</span>
+<span class="site-footer__legal-line">ОГРНИП 319911200072827</span>
+</div>
+<div class="site-footer__social">
+<a aria-label="Telegram" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="alt" src="../local/templates/berega/img/footer-telegram.svg"/></a>
+<a aria-label="WhatsApp" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="alt" src="../local/templates/berega/img/footer-whatsapp.svg"/></a>
+<a aria-label="MAX" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="alt" src="../local/templates/berega/img/footer-max.svg"/></a>
+</div>
+</div>
+</div>
+<div class="site-footer__bottom">
+<div class="site-footer__policy">
+<a href="../policy/index.html">Политика конфиденциальности</a>
+<a href="../soglasie/index.html">Согласие на обработку персональных данных</a>
+</div>
+<span>© Copyright 2026 г.</span>
+<span class="site-footer__made">Сделано в <img alt="SHEER" class="site-footer__sheer" src="../local/templates/berega/img/sheer-logo.svg"/></span>
+</div>
+</div>
+</footer>
+
+</div><!-- .page -->
+
+<!-- Модальное окно — эталон из index.html -->
+<div class="modal-block" id="callback">
+<div class="form-main">
+<div class="form-main__title">Рассчитаем 3 инвестиционных сценария под вашу сумму <br/>и цель</div>
+<div class="form-main__descr">Доходность. Чёткие сроки. Логика выхода. Без воды</div>
+<form action="#" method="post">
+<div class="scenario-form__group">
+<input aria-label="Телефон" class="scenario-input input-phone" name="phone" placeholder="Ваш телефон" required="" type="tel"/>
+<select class="scenario-input" required="">
+<option disabled="" selected="" value="">Бюджет</option>
+<option value="1">10-20 млн ₽</option>
+<option value="2">20-40 млн ₽</option>
+<option value="3">от 40 млн ₽</option>
+</select>
+</div>
+<input class="btn-main" type="submit" value="Получить 3 инвестиционных сценария"/>
+<div class="checkbox">
+<label>
+<input checked="" required="" type="checkbox"/>
+<span>Выражаю <a href="../soglasie/index.html">согласие</a> на обработку моих персональных данных в соответствии с <a href="../policy/index.html">Политикой обработки персональных данных</a></span>
+</label>
+</div>
+</form>
+</div>
+</div>
+
+</body>
+</html>

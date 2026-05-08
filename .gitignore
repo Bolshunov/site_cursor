@@ -1,0 +1,31 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Env / secrets
+.env
+.env.*
+*.key
+*.pem
+
+# Logs / temp
+*.log
+*.tmp
+
+# Bitrix cache and temp
+/bitrix/cache/
+/bitrix/managed_cache/
+/bitrix/stack_cache/
+/bitrix/html_pages/
+/bitrix/backup/
+/upload/resize_cache/
+/upload/tmp/
+/upload/webp/
+/bitrix/tmp/
+/bitrix/.settings_extra.php
+
+# Local machine artifacts
+/local/php_interface/dbconn.php
+/bitrix/php_interface/dbconn.php

@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+
+<html lang="ru">
+<head>
+<meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+<meta content="width=device-width, initial-scale=1" name="viewport"/>
+<meta content="text/html; charset=utf-8" http-equiv="Content-Type"/>
+<meta content="Сравниваем два курортных рынка по порогу входа, ценовой динамике, доходности аренды, ликвидности и операционной нагрузке — чтобы инвестор выбрал регион под свою стратегию и капитал." name="description"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<style>
+		:root{
+			--bg:#f5f9ff;
+			--panel:#ffffff;
+			--text:#0f172a;
+			--muted:#64748b;
+			--line:#dbeafe;
+			--blue:#2563eb;
+			--blue-dark:#1d4ed8;
+			/* отступ под липкую шапку для сайдбаров со sticky */
+			--articles-sticky-top:88px;
+			/* сетка «контент + сайдбар» как на странице статьи: 820 + 40 + 288 */
+			--articles-content-max:820px;
+			--articles-sidebar-w:288px;
+			--articles-layout-gap:40px;
+			--articles-row-max:1148px;
+			--articles-sb-cta-min-height:216.7px;
+		}
+
+		/* Общие блоки сайдбара: список статей и детальная статья */
+		.p-sb-cta{
+			background:linear-gradient(150deg,#1d4ed8 0%,#3b82f6 100%);
+			border-radius:16px;
+			padding:22px;
+			color:#fff;
+			margin-bottom:18px;
+			box-shadow:0 10px 26px rgba(37,99,235,.22);
+			box-sizing:border-box;
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+			min-height:var(--articles-sb-cta-min-height);
+		}
+		.p-sb-cta h3{
+			font-size:17px;
+			font-weight:800;
+			margin:0 0 8px;
+			color:#fff;
+			line-height:1.25;
+		}
+		.p-sb-cta > p:not(.p-sb-cta-free){
+			font-size:14px;
+			line-height:1.55;
+			margin:0 0 14px;
+			color:rgba(255,255,255,.88);
+		}
+		.p-sb-cta-free{
+			font-size:12px;
+			color:rgba(255,255,255,.78);
+			margin:8px 0 0;
+			text-align:center;
+		}
+		.p-sb-btn{
+			display:block;
+			text-align:center;
+			padding:11px 14px;
+			background:#fff;
+			color:#1d4ed8;
+			border-radius:10px;
+			font-size:14px;
+			font-weight:800;
+			text-decoration:none;
+			transition:all .16s ease;
+		}
+		.p-sb-btn:hover{
+			opacity:.92;
+			transform:translateY(-1px);
+		}
+		.p-sb-useful{
+			background:#fff;
+			border:1px solid #e8f0fe;
+			border-radius:14px;
+			padding:18px 18px 8px;
+			margin-bottom:18px;
+			box-sizing:border-box;
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+		}
+		.p-sb-useful h4{
+			font-size:15px;
+			font-weight:800;
+			color:#0f172a;
+			margin:0 0 10px;
+		}
+		.p-sb-useful a{
+			display:block;
+			padding:9px 0;
+			border-bottom:1px solid #eef4ff;
+			color:#2563eb;
+			text-decoration:none;
+			font-size:14px;
+			font-weight:600;
+		}
+		.p-sb-useful a:last-child{
+			border-bottom:none;
+			padding-bottom:2px;
+		}
+		.p-sb-useful a:hover{color:#1d4ed8}
+
+		.p-sidebar{
+			position:sticky;
+			top:var(--articles-sticky-top,88px);
+			align-self:start;
+			flex:0 0 var(--articles-sidebar-w);
+			width:var(--articles-sidebar-w);
+			max-width:100%;
+			max-height:calc(100vh - var(--articles-sticky-top,88px) - 16px);
+			overflow-y:auto;
+			overflow-x:hidden;
+			-webkit-overflow-scrolling:touch;
+			z-index:5;
+		}
+		@media (max-width:1100px){
+			.p-sidebar{
+				position:static;
+				flex:none;
+				width:auto;
+				max-height:none;
+				overflow:visible;
+			}
+			.p-sb-cta,
+			.p-sb-useful{
+				width:auto;
+				max-width:100%;
+			}
+		}
+
+		/*
+		 * Не вешаем overflow-x на .articles-main / .articles-shell — иначе ломается
+		 * position:sticky у правого сайдбара. Горизонталь обрезаем в колонке контента.
+		 */
+		*{box-sizing:border-box}
+		body.articles-layout{
+			margin:0;
+			min-width:0;
+			width:100%;
+			font-family:'Inter',system-ui,-apple-system,sans-serif;
+			color:var(--text);
+			background:var(--bg);
+		}
+		.articles-main{
+			min-width:0;
+		}
+
+		.articles-topbar{
+			position:sticky;
+			top:0;
+			z-index:1000;
+			width:100%;
+			max-width:100%;
+			box-sizing:border-box;
+			background:rgba(245,249,255,.92);
+			backdrop-filter:blur(8px);
+			border-bottom:1px solid var(--line);
+		}
+
+		.articles-topbar-inner{
+			max-width:1240px;
+			margin:0 auto;
+			padding:12px 18px;
+			display:grid;
+			grid-template-columns:auto 1fr auto auto;
+			align-items:center;
+			gap:14px;
+		}
+
+		.articles-logo{
+			display:flex;
+			align-items:center;
+			gap:10px;
+			text-decoration:none;
+			color:var(--text);
+		}
+		.articles-logo-badge{
+			width:34px;height:34px;border-radius:10px;
+			display:inline-flex;align-items:center;justify-content:center;
+			background:linear-gradient(135deg,var(--blue),#60a5fa);
+			color:#fff;font-weight:900;font-size:14px;
+		}
+		.articles-logo-text{line-height:1}
+		.articles-logo-title{font-size:14px;font-weight:900;letter-spacing:.02em}
+		.articles-logo-sub{font-size:11px;color:var(--muted);margin-top:2px}
+
+		.articles-nav{
+			display:flex;
+			align-items:center;
+			gap:14px;
+			justify-content:center;
+			flex-wrap:wrap;
+		}
+		.articles-nav a{
+			text-decoration:none;
+			color:#334155;
+			font-size:14px;
+			font-weight:600;
+			padding:8px 10px;
+			border-radius:10px;
+			transition:.18s;
+		}
+		.articles-nav a:hover{background:#eaf2ff;color:var(--blue-dark)}
+
+		.articles-phone{
+			text-decoration:none;
+			color:var(--text);
+			font-weight:700;
+			font-size:14px;
+			white-space:nowrap;
+		}
+
+		.articles-cta{
+			display:inline-flex;
+			align-items:center;
+			justify-content:center;
+			padding:10px 16px;
+			border-radius:12px;
+			background:linear-gradient(135deg,var(--blue),#3b82f6);
+			color:#fff;
+			text-decoration:none;
+			font-size:14px;
+			font-weight:800;
+			white-space:nowrap;
+			transition:.18s;
+		}
+		.articles-cta:hover{transform:translateY(-1px);box-shadow:0 8px 22px rgba(37,99,235,.28)}
+
+		.articles-shell{
+			max-width:1240px;
+			margin:0 auto;
+			padding:24px 18px 56px;
+			width:100%;
+			min-width:0;
+			overflow:visible;
+		}
+
+		@media (max-width:980px){
+			.articles-topbar-inner{
+				grid-template-columns:1fr auto;
+				gap:10px;
+			}
+			.articles-nav{grid-column:1/-1;justify-content:flex-start;order:3}
+			.articles-phone{display:none}
+		}
+	</style>
+</head>
+<body class="articles-layout">
+<header class="articles-topbar">
+<div class="articles-topbar-inner">
+<a class="articles-logo" href="../../index.html">
+<span class="articles-logo-badge">SE</span>
+<span class="articles-logo-text">
+<span class="articles-logo-title">SMARTLINK ESTATE</span>
+<span class="articles-logo-sub">Недвижимость и аналитика</span>
+</span>
+</a>
+<nav class="articles-nav">
+<a href="../../index.html">Новостройки</a>
+<a href="../index.html">Статьи</a>
+<a href="../../contacts/index.html">Контакты</a>
+</nav>
+<a class="articles-phone" href="tel:+78000000000">8 (800) 000-00-00</a>
+<a class="articles-cta" href="../../contacts/index.html">Подобрать квартиру</a>
+</div>
+</header>
+<div class="articles-main">
+<div class="articles-shell"><style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap');
+
+.p-page{font-family:'Inter',system-ui,sans-serif;color:#1e293b;-webkit-font-smoothing:antialiased;line-height:1.6;min-width:0}
+.p-bc{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:13px;color:#94a3b8;margin-bottom:20px}
+.p-bc a{color:#2563eb;text-decoration:none;transition:color .15s}
+.p-bc a:hover{color:#1d4ed8}
+.p-bc-sep{color:#cbd5e1}
+
+.p-meta{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-bottom:14px}
+.p-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:700;color:#64748b}
+.p-badge-tag{color:#2563eb}
+.p-date{font-size:13px;color:#94a3b8}
+
+.p-title{
+  font-size:clamp(26px,3.6vw,40px);
+  font-weight:900;
+  color:#0f172a;
+  line-height:1.13;
+  letter-spacing:-.025em;
+  margin:0 0 22px;
+  max-width:100%;
+  box-sizing:border-box;
+  overflow-wrap:break-word;
+  word-wrap:break-word;
+  word-break:normal;
+}
+/* Обложка: без crop — square/портрет от ИИ не теряют голову/низ (раньше cover + max-height резали кадр) */
+.p-cover-wrap{
+  width:100%;
+  margin-bottom:28px;
+  border-radius:14px;
+  background:linear-gradient(180deg,#eef2f7 0%,#f8fafc 100%);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  min-height:120px;
+}
+.p-cover{
+  display:block;
+  max-width:100%;
+  width:auto;
+  height:auto;
+  max-height:min(520px,78vh);
+  object-fit:contain;
+  border-radius:14px;
+  box-sizing:border-box;
+}
+.p-body{font-size:17px;line-height:1.82;color:#334155}
+.p-body>p:first-child{font-size:18px;color:#1e293b;font-weight:500}
+.p-body h2{font-size:24px;font-weight:800;color:#0f172a;margin:2.2em 0 .65em;line-height:1.25;letter-spacing:-.015em;padding-bottom:10px;border-bottom:2px solid #e8f0fe}
+.p-body h3{font-size:19px;font-weight:700;color:#0f172a;margin:1.8em 0 .55em;line-height:1.3}
+.p-body p{margin:.75em 0}
+.p-body ul,.p-body ol{padding-left:1.35em;margin:.75em 0}
+.p-body li{margin-bottom:.5em}
+.p-body li::marker{color:#2563eb;font-weight:700}
+.p-body strong{color:#0f172a}
+.p-body a{color:#2563eb;text-underline-offset:2px}
+.p-body a:hover{color:#1d4ed8}
+.p-body blockquote{border-left:3px solid #2563eb;margin:1.6em 0;padding:14px 18px 14px 22px;background:#f8faff;border-radius:0 10px 10px 0;font-style:italic;color:#475569;font-size:16px}
+.p-body img{max-width:100%;border-radius:10px;margin:1em 0}
+.p-body table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  margin:1.2em 0 1.6em;
+  font-size:16px;
+  line-height:1.55;
+  background:#fff;
+  border:1px solid #dbeafe;
+  border-radius:12px;
+  overflow:hidden;
+  box-shadow:0 10px 24px rgba(15,23,42,.05);
+}
+.p-body thead th{
+  background:linear-gradient(180deg,#f4f8ff 0%,#eff6ff 100%);
+  color:#0f172a;
+  font-weight:700;
+  white-space:nowrap;
+}
+.p-body th,.p-body td{
+  padding:12px 14px;
+  border-bottom:1px solid #e8f0fe;
+  border-right:1px solid #e8f0fe;
+  vertical-align:top;
+}
+.p-body th:last-child,.p-body td:last-child{border-right:none}
+.p-body tbody tr:last-child td{border-bottom:none}
+.p-body tbody tr:nth-child(even) td{background:#fcfdff}
+.p-body tbody tr:hover td{background:#f8fbff}
+
+.p-divider{border:none;border-top:1px solid #e8f0fe;margin:36px 0}
+.p-faq-title{font-size:22px;font-weight:800;color:#0f172a;margin:0 0 20px;letter-spacing:-.015em}
+.p-faq-item{border:1px solid #e8f0fe;border-radius:12px;margin-bottom:10px;overflow:hidden}
+.p-faq-q{display:flex;align-items:center;justify-content:space-between;padding:16px 18px;cursor:pointer;font-weight:700;font-size:15px;color:#0f172a;gap:10px;user-select:none;transition:background .15s}
+.p-faq-q:hover{background:#f8faff}
+.p-faq-q::after{content:'﹢';font-size:20px;color:#2563eb;flex-shrink:0;font-weight:400;line-height:1}
+.p-faq-item.open .p-faq-q::after{content:'－'}
+.p-faq-a{display:none;padding:14px 18px 16px;font-size:15px;color:#475569;line-height:1.7;border-top:1px solid #e8f0fe}
+.p-faq-item.open .p-faq-a{display:block}
+
+.p-cta-inline{background:linear-gradient(135deg,#1d4ed8 0%,#2563eb 60%,#3b82f6 100%);border-radius:14px;padding:24px 28px;margin:2.2em 0;display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap}
+.p-cta-inline-left h3{font-size:19px;font-weight:800;color:#fff;margin:0 0 4px}
+.p-cta-inline-left p{font-size:14px;color:rgba(255,255,255,.82);margin:0}
+.p-cta-inline-btn{padding:12px 24px;background:#fff;color:#1d4ed8;border-radius:10px;font-weight:700;font-size:15px;text-decoration:none;white-space:nowrap;transition:opacity .15s}
+.p-cta-inline-btn:hover{opacity:.88}
+
+.p-cta-bottom{background:#f8faff;border:2px solid #dbeafe;border-radius:16px;padding:28px;text-align:center;margin:32px 0}
+.p-cta-bottom h3{font-size:22px;font-weight:800;color:#0f172a;margin:0 0 8px}
+.p-cta-bottom p{font-size:15px;color:#64748b;margin:0 0 18px}
+.p-cta-bottom a{display:inline-block;padding:13px 30px;background:#2563eb;color:#fff;border-radius:12px;font-weight:700;font-size:16px;text-decoration:none;transition:background .18s}
+.p-cta-bottom a:hover{background:#1d4ed8}
+
+.p-back{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:#2563eb;text-decoration:none;margin-top:8px;transition:color .15s}
+.p-back:hover{color:#1d4ed8}
+
+.p-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:28px}
+.p-tag{padding:5px 13px;background:#eff6ff;color:#2563eb;border-radius:100px;font-size:13px;font-weight:600;text-decoration:none;transition:background .15s}
+.p-tag:hover{background:#dbeafe}
+
+/* сетка статьи; блоки .p-sb-* и .p-sidebar — в header_articles.php */
+.p-layout{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) var(--articles-sidebar-w,288px);
+  gap:var(--articles-layout-gap,40px);
+  align-items:start;
+  max-width:100%;
+}
+
+.p-layout > main{
+  max-width:var(--articles-content-max,820px);
+  min-width:0;
+  overflow-x:clip;
+  box-sizing:border-box;
+}
+
+@media (max-width:1100px){
+  .p-layout{
+    grid-template-columns:1fr;
+  }
+  .p-layout > main{
+    max-width:none;
+  }
+}
+
+/* telegram */
+.p-sb-telegram{
+    background:#f0f9ff;
+    border:1px solid #bae6fd;
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+}
+.p-sb-telegram h4{
+    font-size:14px;
+    font-weight:800;
+    color:#0f172a;
+    margin:0 0 6px;
+}
+.p-sb-telegram p{
+    font-size:13px;
+    color:#64748b;
+    line-height:1.5;
+    margin:0 0 12px;
+}
+.p-sb-telegram a{
+    display:inline-block;
+    padding:9px 16px;
+    background:#0ea5e9;
+    color:#fff;
+    border-radius:8px;
+    font-size:13px;
+    font-weight:700;
+    text-decoration:none;
+}
+.p-sb-telegram a:hover{background:#0284c7}
+
+@media (max-width:860px){
+    .p-cta-inline{flex-direction:column;text-align:center}
+    .p-cta-inline-btn{width:100%;text-align:center}
+    .p-body table{
+      display:block;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      border-radius:10px;
+    }
+    .p-body th,.p-body td{
+      min-width:140px;
+      font-size:15px;
+      padding:10px 12px;
+    }
+}
+</style>
+<div class="p-page">
+<div class="p-layout">
+<main>
+<div class="p-bc">
+<a href="../../index.html">Главная</a>
+<span class="p-bc-sep">/</span>
+<a href="../index.html">Статьи</a>
+<span class="p-bc-sep">/</span>
+<span>Крым vs Сочи: где инвестору проще зайти в 2026 году</span>
+</div>
+<div class="p-meta">
+<span class="p-badge">
+                    Статья
+                                    </span>
+<span class="p-date">06.05.2026</span>
+</div>
+<h1 class="p-title">Крым vs Сочи: где инвестору проще зайти в 2026 году</h1>
+<div class="p-body">
+<p>Когда инвестор выбирает между Крымом и Сочи, он сравнивает не просто два города у моря. Он выбирает разные модели входа, разные горизонты доходности и разные уровни операционной нагрузки. В 2026 году эти рынки разошлись заметнее, чем когда-либо: один замедлился по темпу роста цен, второй резко ускорился. Разбираем оба по пяти ключевым параметрам.</p>
+<h2>Порог входа: разрыв в 2–3 раза</h2>
+<p>Это самое очевидное различие, которое сразу определяет, кому вообще доступен каждый рынок.</p>
+<p>В Сочи минимальный бюджет для покупки в новостройке в 2026 году — около 8,2 млн рублей за студию площадью 22–23 м², и это нижняя граница в удалённых локациях. Средняя же стоимость сделки на первичном рынке составляет 21,6 млн рублей. Минимальная цена квадратного метра в новостройках со сдачей в 2026 году — 270 тыс. рублей, а средневзвешенная по рынку, по данным аналитиков Urban на I квартал 2026 года, достигла 706 тыс. рублей.</p>
+<p>В Крыму картина иная. Средняя цена квадратного метра в новостройках по итогам I квартала 2026 года — около 298,7 тыс. рублей. Реальный вход в ликвидный курортный объект начинается от 7–8 млн рублей. Апартаменты в Евпатории с чековым диапазоном 7,3–8,5 млн рублей — это не единичные предложения, а сформировавшийся сегмент рынка.</p>
+<p>Пример из практики: покупатель в марте 2025 года вошёл в проект «Лазурный берег» (Евпатория) с чеком 7 881 100 рублей за студию 29,7 м². К марту 2026 года рыночная оценка объекта составила около 9 327 150 рублей — прирост порядка 1,4 млн рублей при оплате наличными. Для сравнения: в Сочи за сопоставимый бюджет купить ликвидный объект у моря практически невозможно — рынок либо предложит удалённую локацию, либо малоформатный вариант без инфраструктуры.</p>
+<p>Вывод по параметру: Крым доступен при бюджете от 7 млн рублей. Сочи — от 10–12 млн рублей за ликвидный объект, средний сегмент стартует с 19–20 млн.</p>
+<h2>Ценовая динамика: кто растёт быстрее</h2>
+<p>По итогам I квартала 2026 года Крым прибавил 22,7% в годовом выражении и вышел на 298,7 тыс. рублей за квадратный метр. Сочи за тот же период вырос лишь на 1,5% — до 706 тыс. рублей. Это самый показательный сигнал: дорогой рынок перешёл в стагнацию, дешёвый — ускорился.</p>
+<p>Основные причины в Крыму: рост туристического потока (7,4 млн человек в 2025 году, +15% к 2024 году по данным Минтуризма РК), расширение предложения новых проектов при опережающем спросе, активный переток инвесторов из Сочи и Анапы в поисках более комфортного порога входа.</p>
+<p>Почему Сочи замедлился: рынок приближается к ценовому потолку покупательской способности, конкуренция среди арендодателей растёт, а ипотечные ограничения снизили объём сделок. Вторичный рынок уже демонстрирует вынужденный дисконт.</p>
+<p>Долгосрочный потенциал Крыма аналитики объясняют структурным разрывом: при сопоставимом климате и береговой линии крымская недвижимость стоит в 2–2,5 раза дешевле сочинской. Этот гэп либо закроется по мере развития инфраструктуры, либо сохранится как постоянная страховка для инвестора. В Сочи аналогичного апсайда уже нет — рынок давно переоценён.</p>
+<p>Конкретный кейс: в апреле 2025 года инвестор вошёл в проект «Хидэн» (Ялта, ЮБК) по цене 10 203 120 рублей за апартамент 34,5 м². К марту 2026 года рыночная оценка объекта составила около 15 180 000 рублей — прирост порядка 4,9 млн рублей менее чем за год. Схожий прирост в абсолютном выражении при сочинском входе потребовал бы вдвое большего вложенного капитала.</p>
+<h2>Арендная модель и доходность</h2>
+<p>Оба рынка предполагают краткосрочную аренду как основную инвестиционную модель. Но операционная реальность — разная.</p>
+<p>В Крыму доходность арендного жилья оценивается в 7–13% годовых в зависимости от локации и формата управления. При профессиональном управлении через УК средний чистый доход составляет 10–15% годовых. Суточные ставки аренды варьируются от 7 до 17 тыс. рублей в зависимости от сезона. Рынок апарт-отелей с профессиональным управлением активно развивается: в Крыму одновременно строится около 100 комплексов апартаментов на 15 тыс. номеров. Сезонность остаётся структурным риском — пиковая загрузка приходится на июнь-сентябрь, хотя данные за 2025 год показывают расширение сезона: весенняя загрузка в марте достигала 70%.</p>
+<p>В Сочи исторически более высокая конкуренция между арендодателями при сопоставимом или меньшем туристическом спросе. Доходность сочинской квартиры на коротком найме — 4–6% годовых, при высокой конкуренции и ценовом насыщении рынка. Сочи принял около 8 млн гостей в 2025 году, но большое количество объектов на рынке аренды давит на ставки. В итоге инвестор вкладывает больше (от 20 млн рублей), а получает сопоставимую или меньшую арендную доходность.</p>
+<p>Если считать return on equity — доход на вложенный капитал — Крым выигрывает структурно: меньший чек при сопоставимой или более высокой доходности даёт лучшую отдачу на рубль инвестиций.</p>
+<h2>Ликвидность: кому проще выйти из актива</h2>
+<p>Это параметр, который инвесторы часто недооценивают на входе.</p>
+<p>Сочи — рынок с многолетней историей сделок, понятными стандартами оценки и широкой покупательской базой. Объект в хорошей локации у моря найдёт покупателя или арендатора с предсказуемой скоростью. Вторичный рынок здесь, однако, в 2025–2026 годах начал демонстрировать удлинение сроков экспозиции: часть объектов простаивает, продавцы вынуждены делать скидки к заявленной цене.</p>
+<p>Крым — рынок молодой, массовое строительство началось около 5–7 лет назад, и полноценной ценовой статистики, по которой инвестор мог бы уверенно прогнозировать поведение цен, пока нет. При этом ликвидность растёт вместе с рынком: 85% покупателей апартаментов на полуострове — не крымчане, то есть спрос формируют инвесторы и покупатели из других регионов, что создаёт широкую базу возможных покупателей при выходе.</p>
+<p>Практика Berega показывает: в хорошо выбранном проекте выйти через переуступку или продажу удаётся в пределах нескольких месяцев. Повторные покупки клиентов — один из косвенных индикаторов ликвидности: если инвестор возвращается и докупает, значит, модель работает. Например, один из клиентов в августе 2025 года совершил повторную покупку в проекте «Хидэн» (Ялта), войдя в объект 27,2 м² по цене 12 316 500 рублей.</p>
+<p>Вывод: Сочи ликвиднее в моменте при хорошей локации. Крым — рынок с растущей ликвидностью, где выход требует более тщательного выбора объекта и локации на входе.</p>
+<h2>Налоговая и операционная нагрузка</h2>
+<p>Оба рынка работают в рамках общероссийского налогового законодательства. Стандартные ставки одинаковы: НДФЛ 13% при продаже до истечения минимального срока владения (3–5 лет), налог на имущество по кадастровой стоимости, налог с арендного дохода.</p>
+<p>Практические различия — в банковской и операционной доступности.</p>
+<p>Крым имеет особенности в работе с банками: часть федеральных программ применяется с ограничениями, некоторые банки предъявляют дополнительные требования к объектам. Семейная ипотека на полуострове работает, но не у всех кредиторов и не во всех проектах. Это требует предварительной проверки при выборе объекта. Вместе с тем рассрочка от застройщика — один из самых распространённых инструментов входа: многие проекты предлагают её без процентов на период строительства при первоначальном взносе от 20–30%.</p>
+<p>Сочи в этом плане проще: стандартная ипотека, переуступки, аккредитив — всё работает в штатном режиме. Юридическая прозрачность выше, хотя специфические риски Сочи существуют: оползневые и подтапливаемые зоны, объекты с неоформленными разрешениями, нестыковки в документации на горные локации. Перед покупкой обязательна проверка геологической документации участка и разрешения на строительство.</p>
+<p>Операционная нагрузка при сдаче в аренду в Крыму выше в части инфраструктурного управления: часть рынка ещё не имеет зрелого рынка УК. Однако в качественных апарт-комплексах эта проблема решена — управляющая компания берёт на себя сдачу, уборку, коммуникацию с гостями.</p>
+<h2>Риски: что важно учитывать</h2>
+<p>Оба рынка несут специфические риски, которые инвестор обязан заложить в расчёты заранее.</p>
+<p>Крым: геополитическая неопределённость — главный структурный риск. Транспортная доступность (только Крымский мост, железная дорога и паромная переправа) ограничивает поток по сравнению с потенциальным спросом. Юридические нюансы отдельных сделок требуют внимания: не все объекты имеют чистую документацию. Сезонность — реальный фактор: без профессионального управления межсезонный простой может существенно снизить годовую доходность.</p>
+<p>Сочи: рынок перегрет в массовом сегменте. Высокий входной чек означает, что ошибка в выборе объекта стоит дороже. Физические риски — оползневые зоны, нестабильные грунты в горных районах — требуют геологической проверки до сделки. Конкуренция среди арендодателей уже давит на доходность. Рост предложения апарт-комплексов усиливает конкуренцию за арендатора.</p>
+<p>Оба рынка: высокая ключевая ставка ограничивает доступность стандартной ипотеки. Реальная арендная доходность после операционных расходов, налогов и ремонта может быть заметно ниже валовой — это важно считать честно.</p>
+<h2>Сравнительная таблица по параметрам</h2>
+<table><thead><tr><th>Параметр</th><th>Крым</th><th>Сочи</th></tr></thead><tbody>
+<tr><td>Порог входа</td><td>от 7–8 млн руб. (ликвидный курортный объект)</td><td>от 10–12 млн руб. минимум; средняя сделка 21,6 млн руб.</td></tr>
+<tr><td>Цена м² (первичный рынок, 2026)</td><td>~298 700 руб. (+22,7% г/г)</td><td>~706 000 руб. (+1,5% г/г)</td></tr>
+<tr><td>Потенциал роста цены</td><td>Высокий — рынок не отыграл разрыв с Сочи</td><td>Умеренный — рынок близок к ценовому потолку</td></tr>
+<tr><td>Арендная доходность (валовая)</td><td>7–13% годовых, при УК — 10–15%</td><td>4–6% годовых</td></tr>
+<tr><td>Ликвидность</td><td>Растущая; требует выбора правильного проекта</td><td>Высокая в хороших локациях; вторичный рынок замедлился</td></tr>
+<tr><td>Инструменты входа</td><td>Рассрочка от застройщика, семейная ипотека (с ограничениями)</td><td>Стандартная ипотека, рассрочка, аккредитив</td></tr>
+<tr><td>Операционная нагрузка</td><td>Выше в сегменте без УК; решается выбором апарт-формата</td><td>Стандартная; рынок управления зрелый</td></tr>
+<tr><td>Специфические риски</td><td>Геополитика, транспортная доступность, сезонность</td><td>Геология (оползни), юридические нюансы, высокая конкуренция</td></tr>
+</tbody></table>
+<h2>Кому подходит каждый рынок</h2>
+<p>Оба рынка рабочие. Выбор определяется не тем, какой «лучше», а тем, какая стратегия и какой капитал у конкретного инвестора.</p>
+<p>Крым — оптимальный выбор, если:<br/>— бюджет 7–15 млн рублей и нужен ликвидный курортный объект с понятной арендной моделью;<br/>— приоритет — рост стоимости, а не максимальная текущая арендная доходность;<br/>— инвестор готов к рассрочке и не зависит от ипотечного финансирования;<br/>— горизонт 3–5 лет: потенциал переоценки рынка остаётся высоким.</p>
+<p>Типичный сценарий: вход в евпаторийский или ялтинский апарт-комплекс по 8–12 млн рублей, передача в управление УК, генерация 10–12% арендной доходности в сезон, выход через 3–5 лет по рыночной цене с учётом роста.</p>
+<p>Сочи — более аргументированный выбор, если:<br/>— бюджет от 15–20 млн рублей и важна максимальная юридическая прозрачность;<br/>— стратегия — стабильный денежный поток при меньшей ставке на рост цены;<br/>— нужна стандартная ипотека без ограничений;<br/>— горизонт инвестирования — 5–10 лет, ставка на устойчивость, а не на динамику.</p>
+<p>Важная оговорка: оба рынка требуют тщательного выбора конкретного объекта. Ни «Крым», ни «Сочи» сами по себе не являются гарантией результата — им является локация, застройщик, формат управления и правильно посчитанная реальная доходность.</p>
+<p><strong>Если вы рассматриваете вход в крымский рынок и хотите сравнить конкретные объекты под свой бюджет и стратегию — обратитесь к специалистам Berega. Мы подберём варианты с реальными расчётами доходности и актуальными условиями входа.</strong></p> </div>
+<div class="p-cta-inline">
+<div class="p-cta-inline-left">
+<h3>Нужна бесплатная консультация?</h3>
+<p>Эксперты подберут ЖК под ваш бюджет и цель</p>
+</div>
+<a class="p-cta-inline-btn" href="../../contacts/index.html">Получить подборку →</a>
+</div>
+<div class="p-cta-bottom">
+<h3>Получить консультацию</h3>
+<p>Эксперты подберут лучший вариант под ваш бюджет.</p>
+<a href="../../contacts/index.html">Получить подборку →</a>
+</div>
+<a class="p-back" href="../index.html">← Все статьи</a>
+</main>
+<aside class="p-sidebar">
+<div class="p-sb-cta">
+<h3>Нужна консультация?</h3>
+<p>Эксперт подберёт лучший вариант под ваш бюджет и цель</p>
+<a class="p-sb-btn" href="../../contacts/index.html">Получить подборку</a>
+<p class="p-sb-cta-free">Бесплатно</p>
+</div>
+<div class="p-sb-useful">
+<h4>Полезное</h4>
+<a href="../index.html">Все статьи</a>
+<a href="../../index.html">Объекты недвижимости</a>
+<a href="../../index.html">Ипотека и рассрочка</a>
+<a href="../../index.html">Калькулятор платежей</a>
+</div>
+<div class="p-sb-telegram">
+<h4>Подпишитесь на канал</h4>
+<p>Новости рынка, обзоры объектов, актуальные цены</p>
+<a href="https://t.me/" rel="noopener" target="_blank">Подписаться</a>
+</div>
+</aside>
+</div>
+</div>
+<script>
+function toggleFaq(i) {
+    var item = document.getElementById('faq-' + i);
+    if (item) item.classList.toggle('open');
+}
+</script></div>
+<footer class="se-footer">
+<div class="se-footer__inner">
+<div class="se-footer__top">
+<div class="se-footer__brand">
+<a class="se-footer__logo" href="../../index.html">
+<span aria-hidden="true" class="se-footer__badge">SE</span>
+<span class="se-footer__logo-text">
+<span class="se-footer__name">SMARTLINK ESTATE</span>
+<span class="se-footer__tagline">Экспертная недвижимость</span>
+</span>
+</a>
+<p class="se-footer__lead">
+					Подбираем недвижимость под цель: для жизни, инвестиций и роста капитала.
+					Сопровождаем сделку от заявки до ключей.
+				</p>
+<a class="se-footer__cta" href="../../contacts/index.html">Получить подборку</a>
+</div>
+<nav aria-label="Каталог" class="se-footer__col">
+<div class="se-footer__col-title">Каталог</div>
+<ul class="se-footer__links">
+<li><a href="../../index.html">Новостройки</a></li>
+<li><a href="../index.html">Статьи</a></li>
+<li><a href="../../contacts/index.html">Контакты</a></li>
+</ul>
+</nav>
+<nav aria-label="Покупателям" class="se-footer__col">
+<div class="se-footer__col-title">Покупателям</div>
+<ul class="se-footer__links">
+<li><a href="../../contacts/index.html">Подбор квартиры</a></li>
+<li><a href="../../contacts/index.html">Ипотека</a></li>
+<li><a href="../../contacts/index.html">Консультация</a></li>
+</ul>
+</nav>
+<div class="se-footer__col">
+<div class="se-footer__col-title">Контакты</div>
+<ul class="se-footer__links se-footer__links--contacts">
+<li><a href="tel:+78000000000">8 (800) 000-00-00</a></li>
+<li><a href="mailto:info@smartlink-estate.ru">info@smartlink-estate.ru</a></li>
+<li><span class="se-footer__hours">Пн–Пт: 10:00–20:00</span></li>
+</ul>
+</div>
+</div>
+<div class="se-footer__bottom">
+<span class="se-footer__copy">© 2026 SMARTLINK ESTATE. Все права защищены.</span>
+<div class="se-footer__legal">
+<a href="../../privacy/index.html">Политика конфиденциальности</a>
+<a href="../../contacts/index.html">Реквизиты</a>
+</div>
+</div>
+</div>
+</footer>
+</div>
+<style>
+/* Один сплошной фон секции, без градиентов и «пятен» */
+.se-footer{
+	margin-top:56px;
+	width:100%;
+	max-width:100%;
+	min-width:0;
+	box-sizing:border-box;
+	background:#f8fafc;
+	border-top:1px solid #e2e8f0;
+	color:#0f172a;
+}
+
+.se-footer__inner{
+	max-width:1240px;
+	margin:0 auto;
+	padding:48px 22px 28px;
+	width:100%;
+	box-sizing:border-box;
+}
+
+.se-footer__top{
+	display:grid;
+	grid-template-columns:minmax(220px,1.4fr) repeat(3,minmax(0,1fr));
+	gap:40px 32px;
+	align-items:start;
+}
+
+.se-footer__brand{
+	max-width:400px;
+}
+
+.se-footer__logo{
+	display:flex;
+	align-items:center;
+	gap:14px;
+	text-decoration:none;
+	color:inherit;
+	margin-bottom:18px;
+	transition:opacity .2s;
+}
+.se-footer__logo:hover{opacity:.88}
+
+.se-footer__badge{
+	width:44px;
+	height:44px;
+	border-radius:14px;
+	background:linear-gradient(145deg,#1d4ed8,#3b82f6);
+	color:#fff;
+	font-size:15px;
+	font-weight:900;
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	box-shadow:0 4px 14px rgba(37,99,235,.35);
+	flex-shrink:0;
+}
+
+.se-footer__logo-text{display:flex;flex-direction:column;gap:2px}
+.se-footer__name{
+	font-size:17px;
+	font-weight:900;
+	letter-spacing:.04em;
+	line-height:1.15;
+}
+.se-footer__tagline{
+	font-size:12px;
+	font-weight:600;
+	color:#64748b;
+	letter-spacing:.02em;
+}
+
+.se-footer__lead{
+	margin:0 0 22px;
+	font-size:14px;
+	line-height:1.75;
+	color:#475569;
+}
+
+.se-footer__cta{
+	display:inline-flex;
+	align-items:center;
+	justify-content:center;
+	padding:12px 22px;
+	border-radius:999px;
+	background:#2563eb;
+	color:#fff;
+	font-size:14px;
+	font-weight:800;
+	text-decoration:none;
+	transition:transform .2s,box-shadow .2s,background .2s;
+	box-shadow:0 4px 16px rgba(37,99,235,.28);
+}
+.se-footer__cta:hover{
+	background:#1d4ed8;
+	transform:translateY(-1px);
+	box-shadow:0 8px 24px rgba(37,99,235,.35);
+}
+
+.se-footer__col-title{
+	font-size:11px;
+	font-weight:800;
+	text-transform:uppercase;
+	letter-spacing:.12em;
+	color:#94a3b8;
+	margin:0 0 16px;
+}
+
+.se-footer__links{
+	list-style:none;
+	margin:0;
+	padding:0;
+	display:flex;
+	flex-direction:column;
+	gap:4px;
+}
+
+.se-footer__links a{
+	display:inline-flex;
+	align-items:center;
+	gap:6px;
+	padding:6px 0;
+	font-size:14px;
+	font-weight:600;
+	color:#334155;
+	text-decoration:none;
+	transition:color .18s,transform .18s;
+	border-radius:6px;
+}
+.se-footer__links a:hover{
+	color:#2563eb;
+	transform:translateX(3px);
+}
+
+.se-footer__links--contacts a{font-weight:700;color:#1e293b}
+.se-footer__hours{
+	display:block;
+	padding:6px 0;
+	font-size:14px;
+	font-weight:500;
+	color:#64748b;
+}
+
+.se-footer__bottom{
+	margin-top:40px;
+	padding-top:22px;
+	border-top:1px solid #e2e8f0;
+	display:flex;
+	align-items:center;
+	justify-content:space-between;
+	gap:16px;
+	flex-wrap:wrap;
+	font-size:13px;
+}
+
+.se-footer__copy{color:#94a3b8}
+
+.se-footer__legal{
+	display:flex;
+	gap:20px;
+	flex-wrap:wrap;
+}
+.se-footer__legal a{
+	color:#64748b;
+	text-decoration:none;
+	font-weight:600;
+	transition:color .18s;
+}
+.se-footer__legal a:hover{color:#2563eb}
+
+@media (max-width:1024px){
+	.se-footer__top{
+		grid-template-columns:1fr 1fr;
+	}
+	.se-footer__brand{
+		grid-column:1/-1;
+		max-width:none;
+	}
+}
+@media (max-width:640px){
+	.se-footer__inner{padding:36px 18px 22px}
+	.se-footer__top{
+		grid-template-columns:1fr;
+		gap:28px;
+	}
+	.se-footer__bottom{
+		flex-direction:column;
+		align-items:flex-start;
+	}
+}
+</style>
+</body>
+</html>
