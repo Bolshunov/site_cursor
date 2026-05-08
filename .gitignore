@@ -1,3 +1,6 @@
+# Старое зеркало для FTP — не храним в репозитории
+/devbitrix-static-mirror/
+
 # OS / IDE
 .DS_Store
 Thumbs.db

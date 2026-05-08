@@ -13,6 +13,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # Репозиторий = содержимое site-cursor/local. Заливка в каталог Bitrix /local на хостинге.
+      # В GitHub → Settings → Secrets: FTP_REMOTE_PATH = devcursor.sheer26.ru/public_html/local
+      # (без вложенного дубля devcursor.sheer26.ru/public_html/.../public_html)
       - name: Deploy files to Beget via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
@@ -20,7 +23,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./devbitrix-static-mirror/
+          local-dir: ./
           server-dir: ${{ secrets.FTP_REMOTE_PATH }}
           protocol: ftp
           exclude: |
@@ -32,3 +35,5 @@ jobs:
             **/.DS_Store
             **/Thumbs.db
             bitrix/**
+            devbitrix-static-mirror/**
+            serve.py
