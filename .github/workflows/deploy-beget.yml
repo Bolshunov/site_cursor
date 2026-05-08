@@ -20,8 +20,10 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           port: ${{ secrets.FTP_PORT }}
+          local-dir: ./devbitrix-static-mirror/
           server-dir: ${{ secrets.FTP_REMOTE_PATH }}
           protocol: ftp
+          dangerous-clean-slate: true
           exclude: |
             **/.git*
             **/.github/**
