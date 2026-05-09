@@ -11,20 +11,21 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       # Репозиторий = содержимое site-cursor/local. Заливка в каталог Bitrix /local на хостинге.
       # В GitHub → Settings → Secrets: FTP_REMOTE_PATH = devcursor.sheer26.ru/public_html/local
-      # (без вложенного дубля devcursor.sheer26.ru/public_html/.../public_html)
+      # (со слэшем на конце или без — ниже добавляется один завершающий /). Без вложенного дубля .../public_html/.../public_html
       - name: Deploy files to Beget via FTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
           server: ${{ secrets.FTP_HOST }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           port: ${{ secrets.FTP_PORT }}
           local-dir: ./
-          server-dir: ${{ secrets.FTP_REMOTE_PATH }}
+          # FTP-Deploy-Action: server-dir обязан заканчиваться на /
+          server-dir: ${{ endsWith(secrets.FTP_REMOTE_PATH, '/') && secrets.FTP_REMOTE_PATH || format('{0}/', secrets.FTP_REMOTE_PATH) }}
           protocol: ftp
           exclude: |
             **/.git*
