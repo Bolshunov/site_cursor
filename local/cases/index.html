@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Кейсы — BEREGA</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="/local/templates/berega/libs/bootstrap/bootstrap-grid.css" rel="stylesheet">
+  <link href="/local/templates/berega/css/main.css" rel="stylesheet">
+  <link href="/local/templates/berega/css/media.css" rel="stylesheet">
+  <style>
+    body { font-family: Inter, system-ui, sans-serif; color: #0f172a; }
+    .cases-page { padding: 36px 0 64px; }
+    .cases-page h1 { margin: 0 0 18px; font-weight: 800; font-size: 40px; }
+    .cases-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; }
+    .case-card { border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; background: #fff; }
+    .case-card__img { width: 100%; height: 220px; object-fit: cover; display: block; }
+    .case-card__body { padding: 16px; }
+    .case-card__meta { font-size: 14px; color: #64748b; margin-bottom: 6px; }
+    .case-card__title { margin: 0 0 8px; font-size: 20px; line-height: 1.3; }
+    .case-card__lead { margin: 0 0 12px; color: #475569; line-height: 1.45; }
+    .case-card__link { font-weight: 700; color: #123468; text-decoration: none; }
+  </style>
+</head>
+<body>
+  <main class="cases-page">
+    <div class="container">
+      <h1>Кейсы</h1>
+      <div class="cases-grid">
+        <article class="case-card">
+          <img class="case-card__img" src="/local/templates/berega/img/construction-slide-1.jpg" alt="ЖК Лазурный берег">
+          <div class="case-card__body">
+            <div class="case-card__meta">Евпатория, Крым · май 2026</div>
+            <h2 class="case-card__title">ЖК «Лазурный берег»</h2>
+            <p class="case-card__lead">Кейс с реальным контентом: вход по ДДУ, расчёт ROI на ПВ и структура рисков.</p>
+            <a class="case-card__link" href="/cases/nazvanie-keysa-1/">Открыть кейс →</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
