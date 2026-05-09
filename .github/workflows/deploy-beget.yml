@@ -13,9 +13,14 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # Репозиторий = содержимое site-cursor/local. Заливка в каталог Bitrix /local на хостинге.
-      # В GitHub → Settings → Secrets: FTP_REMOTE_PATH = devcursor.sheer26.ru/public_html/local
-      # (со слэшем на конце или без — ниже добавляется один завершающий /). Без вложенного дубля .../public_html/.../public_html
+      # Репозиторий = корень проекта. Заливка в каталог Bitrix /local на хостинге.
+      #
+      # ВАЖНО: server-dir у FTP-Deploy — путь ОТНОСИТЕЛЬНО стартовой папки FTP-аккаунта (куда попадаешь сразу после логина).
+      # На Beget часто после входа ты УЖЕ в .../devcursor.sheer26.ru/public_html — тогда в секрет клади только:
+      #   FTP_REMOTE_PATH = local
+      # Если указать devcursor.sheer26.ru/public_html/local, получится вложенность:
+      #   public_html/devcursor.sheer26.ru/public_html/local
+      # Слэш на конце необязателен — ниже добавляется один /.
       - name: Deploy files to Beget via FTP
         uses: SamKirkland/FTP-Deploy-Action@v4.4.0
         with:
