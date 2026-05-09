@@ -13,7 +13,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
-      # Репозиторий = корень проекта. Заливка в каталог Bitrix /local на хостинге.
+      # Репозиторий = только папка Bitrix local/. Заливка в каталог /local на хостинге.
       #
       # ВАЖНО: server-dir у FTP-Deploy — путь ОТНОСИТЕЛЬНО стартовой папки FTP-аккаунта (куда попадаешь сразу после логина).
       # На Beget часто после входа ты УЖЕ в .../devcursor.sheer26.ru/public_html — тогда в секрет клади только:
@@ -28,7 +28,7 @@ jobs:
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASS }}
           port: ${{ secrets.FTP_PORT }}
-          local-dir: ./
+          local-dir: ./local/
           # FTP-Deploy-Action: server-dir обязан заканчиваться на /
           server-dir: ${{ endsWith(secrets.FTP_REMOTE_PATH, '/') && secrets.FTP_REMOTE_PATH || format('{0}/', secrets.FTP_REMOTE_PATH) }}
           protocol: ftp
@@ -40,6 +40,3 @@ jobs:
             **/node_modules/**
             **/.DS_Store
             **/Thumbs.db
-            bitrix/**
-            devbitrix-static-mirror/**
-            serve.py

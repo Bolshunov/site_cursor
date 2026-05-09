@@ -1,5 +1,19 @@
-# Старое зеркало для FTP — не храним в репозитории
+# Репозиторий только для Bitrix /local — остальная статика не коммитится
+/about/
+/articles/
+/bitrix/
+/cases/
+/contacts/
+/new-main/
+/news/
+/objects/
+/policy/
+/soglasie/
+/upload/
 /devbitrix-static-mirror/
+/favicon.png
+/index.html
+/serve.py
 
 # OS / IDE
 .DS_Store
@@ -17,18 +31,14 @@ Thumbs.db
 *.log
 *.tmp
 
-# Bitrix cache and temp
+# Bitrix (если появится вне local)
 /bitrix/cache/
 /bitrix/managed_cache/
 /bitrix/stack_cache/
 /bitrix/html_pages/
 /bitrix/backup/
-/upload/resize_cache/
-/upload/tmp/
-/upload/webp/
 /bitrix/tmp/
 /bitrix/.settings_extra.php
 
 # Local machine artifacts
 /local/php_interface/dbconn.php
-/bitrix/php_interface/dbconn.php
