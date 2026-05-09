@@ -2,7 +2,10 @@
 /about/
 /articles/
 /bitrix/
-/cases/
+# Статика кейсов не в Git, кроме выбранного кейса для деплоя
+/cases/*
+!/cases/nazvanie-keysa-1/
+!/cases/nazvanie-keysa-1/**
 /contacts/
 /new-main/
 /news/

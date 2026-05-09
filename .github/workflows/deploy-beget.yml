@@ -40,3 +40,18 @@ jobs:
             **/node_modules/**
             **/.DS_Store
             **/Thumbs.db
+
+      # Одна статическая страница кейса в корне сайта: public_html/cases/...
+      - name: Deploy cases (static HTML) to Beget via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.4.0
+        with:
+          server: ${{ secrets.FTP_HOST }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASS }}
+          port: ${{ secrets.FTP_PORT }}
+          local-dir: ./cases/
+          server-dir: cases/
+          protocol: ftp
+          exclude: |
+            **/.git*
+            **/.github/**
