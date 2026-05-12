@@ -54,9 +54,7 @@
       min-height: 100vh;
       overflow: hidden;
       background:
-        linear-gradient(180deg, rgba(11, 29, 38, 0) 0%, var(--bg) 31%, var(--bg) 100%),
-        radial-gradient(circle at 70% 16%, rgba(251, 215, 132, .26), transparent 21%),
-        radial-gradient(circle at 12% 12%, rgba(255, 255, 255, .14), transparent 18%),
+        linear-gradient(180deg, rgba(11, 29, 38, 0) 0%, var(--bg) 38%, var(--bg) 100%),
         var(--bg);
       box-shadow: 0 0 100px rgba(0, 0, 0, .2);
     }
@@ -66,49 +64,63 @@
       inset: 0;
       pointer-events: none;
       overflow: hidden;
+      height: 1900px;
     }
 
     .mountain-bg::before {
       content: "";
       position: absolute;
       left: 0;
-      top: -420px;
+      top: 0;
       width: 100%;
-      height: 1513px;
+      height: 1200px;
       background:
         linear-gradient(330.24deg, rgba(11, 29, 38, 0) 31.06%, #0b1d26 108.93%),
-        radial-gradient(circle at 50% 50%, rgba(255,255,255,.18), transparent 35%);
-      opacity: .8;
+        linear-gradient(180deg, rgba(11,29,38,0) 0%, rgba(11,29,38,.05) 54%, #0b1d26 100%);
+      z-index: 4;
     }
 
     .mountain-layer {
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
-      width: 120vw;
+      width: 100vw;
       min-width: 1920px;
-      height: 760px;
-      opacity: .95;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
     }
 
-    .mountain-layer--back {
-      top: 360px;
+    .mountain-layer--high {
+      top: -380px;
+      height: 1513px;
       background:
-        linear-gradient(145deg, transparent 0 23%, rgba(255,255,255,.08) 24% 25%, transparent 26%),
-        linear-gradient(25deg, transparent 0 19%, rgba(255,255,255,.12) 20% 21%, transparent 22%),
-        linear-gradient(162deg, transparent 0 35%, #173745 36% 57%, transparent 58%),
-        linear-gradient(18deg, transparent 0 38%, #214553 39% 60%, transparent 61%);
-      filter: blur(.2px);
-      opacity: .6;
+        linear-gradient(180deg, rgba(11,29,38,.12) 0%, rgba(11,29,38,.45) 100%),
+        url("https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=2400&q=85");
+      background-position: center top;
+      opacity: .62;
+      z-index: 1;
+    }
+
+    .mountain-layer--mid {
+      top: 460px;
+      height: 1422px;
+      background:
+        linear-gradient(180deg, rgba(11,29,38,0) 0%, rgba(11,29,38,.22) 62%, rgba(11,29,38,.85) 100%),
+        url("https://images.unsplash.com/photo-1483728642387-6c3bdd6c93e5?auto=format&fit=crop&w=2400&q=85");
+      background-position: center top;
+      opacity: .85;
+      z-index: 2;
     }
 
     .mountain-layer--front {
-      top: 720px;
-      height: 900px;
+      top: 760px;
+      height: 940px;
       background:
-        linear-gradient(154deg, transparent 0 29%, #132f3b 30% 55%, transparent 56%),
-        linear-gradient(24deg, transparent 0 34%, #183844 35% 65%, transparent 66%),
-        linear-gradient(180deg, rgba(11,29,38,0) 0%, var(--bg) 65%);
+        linear-gradient(180deg, rgba(11,29,38,0) 0%, var(--bg) 70%),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=2400&q=85");
+      background-position: center bottom;
+      z-index: 3;
     }
 
     .header {
@@ -167,7 +179,7 @@
 
     .hero {
       position: relative;
-      z-index: 2;
+      z-index: 5;
       min-height: 1210px;
       padding-top: 188px;
     }
@@ -292,7 +304,7 @@
 
     .content {
       position: relative;
-      z-index: 3;
+      z-index: 6;
       width: min(var(--container), calc(100% - 80px));
       margin: 0 auto;
       display: flex;
@@ -397,8 +409,9 @@
       overflow: hidden;
       background:
         linear-gradient(180deg, rgba(11,29,38,0) 0%, rgba(11,29,38,.7) 100%),
-        radial-gradient(circle at 36% 24%, rgba(251,215,132,.28), transparent 22%),
-        linear-gradient(135deg, #244c5d 0%, #102b36 50%, #08141b 100%);
+        var(--story-image, url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80"));
+      background-size: cover;
+      background-position: center;
       box-shadow: 0 35px 80px rgba(0,0,0,.3);
     }
 
@@ -411,16 +424,31 @@
       bottom: 0;
       height: 56%;
       background:
-        linear-gradient(150deg, transparent 0 22%, rgba(255,255,255,.18) 23% 24%, transparent 25%),
-        linear-gradient(28deg, transparent 0 35%, #183643 36% 72%, transparent 73%);
+        linear-gradient(180deg, rgba(11,29,38,0) 0%, rgba(11,29,38,.62) 100%);
     }
 
     .story-visual::after {
-      height: 38%;
+      height: 100%;
       background:
-        linear-gradient(155deg, transparent 0 26%, #07151c 27% 70%, transparent 71%),
-        linear-gradient(22deg, transparent 0 34%, #0d222c 35% 66%, transparent 67%);
-      opacity: .9;
+        radial-gradient(circle at 30% 20%, rgba(251,215,132,.18), transparent 32%),
+        linear-gradient(180deg, rgba(11,29,38,.12) 0%, rgba(11,29,38,.55) 100%);
+      opacity: 1;
+    }
+
+    .story-visual--sales {
+      --story-image: url("https://images.unsplash.com/photo-1500534314209-a25ddb2bd429?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .story-visual--analytics {
+      --story-image: url("https://images.unsplash.com/photo-1470770841072-f978cf4d019e?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .story-visual--service {
+      --story-image: url("https://images.unsplash.com/photo-1493246507139-91e8fad9978e?auto=format&fit=crop&w=1200&q=80");
+    }
+
+    .story-visual--broker {
+      --story-image: url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80");
     }
 
     .vacancy-card {
@@ -592,7 +620,8 @@
 <body>
 <div class="mntn-page">
   <div class="mountain-bg" aria-hidden="true">
-    <div class="mountain-layer mountain-layer--back"></div>
+    <div class="mountain-layer mountain-layer--high"></div>
+    <div class="mountain-layer mountain-layer--mid"></div>
     <div class="mountain-layer mountain-layer--front"></div>
   </div>
 
@@ -641,7 +670,7 @@
           <p>Нужен человек, который умеет не просто показывать объекты, а объяснять клиенту стратегию: локацию, ликвидность, риски, доходность и следующий шаг сделки.</p>
           <a class="more" href="mailto:hr@berega.test?subject=Эксперт по курортной недвижимости">Откликнуться</a>
         </div>
-        <div class="story-visual">
+        <div class="story-visual story-visual--sales">
           <div class="vacancy-card">
             <strong>Full-time · Симферополь / удалённо</strong>
             <span>Продажи, подбор объектов, сопровождение клиента</span>
@@ -657,7 +686,7 @@
           <p>Считать вход, платежи, аренду, налоги и точку выхода. Мы ищем того, кто спокойно разбирает цифры и помогает команде не продавать красивые, но слабые объекты.</p>
           <a class="more" href="mailto:hr@berega.test?subject=Аналитик инвестиционных сценариев">Откликнуться</a>
         </div>
-        <div class="story-visual">
+        <div class="story-visual story-visual--analytics">
           <div class="vacancy-card">
             <strong>Part-time / project · удалённо</strong>
             <span>Финмодели, сравнительные таблицы, проверка гипотез</span>
@@ -673,7 +702,7 @@
           <p>Связующее звено между клиентом, экспертом, юристом и застройщиком. Важно держать сроки, документы и коммуникацию так, чтобы клиент понимал, что происходит на каждом этапе.</p>
           <a class="more" href="mailto:hr@berega.test?subject=Координатор клиентского пути">Откликнуться</a>
         </div>
-        <div class="story-visual">
+        <div class="story-visual story-visual--service">
           <div class="vacancy-card">
             <strong>Full-time · офис / гибрид</strong>
             <span>Сервис, документы, коммуникация, контроль этапов</span>
@@ -689,7 +718,7 @@
           <p>Ищем брокера, который умеет вести диалог с инвестором, быстро разбираться в запросе и доводить клиента до просмотра, выбора объекта и сделки вместе с экспертом команды.</p>
           <a class="more" href="mailto:hr@berega.test?subject=Брокер по недвижимости">Откликнуться</a>
         </div>
-        <div class="story-visual">
+        <div class="story-visual story-visual--broker">
           <div class="vacancy-card">
             <strong>Full-time · 60 000 ₽ + процент от продаж</strong>
             <span>Первичный контакт, квалификация клиента, сопровождение сделки</span>
