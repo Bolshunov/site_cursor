@@ -1,0 +1,753 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="format-detection" content="telephone=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>О компании — BEREGA</title>
+  <meta name="description" content="BEREGA — бюро крымской недвижимости для инвесторов и семей, которые выбирают объекты у моря на основе цифр, рисков и юридической проверки.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="/local/templates/berega/libs/bootstrap/bootstrap-grid.css" rel="stylesheet">
+  <link href="/local/templates/berega/libs/fancybox/jquery.fancybox.min.css" rel="stylesheet">
+  <link href="/local/templates/berega/libs/slick/slick.css" rel="stylesheet">
+  <link href="/local/templates/berega/css/main.css" rel="stylesheet">
+  <link href="/local/templates/berega/css/media.css" rel="stylesheet">
+  <link href="/local/templates/berega/css/app.css" rel="stylesheet">
+  <style>
+    .about-page {
+      background: #fff;
+      color: #0f172a;
+      font-family: 'Montserrat', 'Inter', system-ui, sans-serif;
+    }
+    .about-section {
+      padding: 64px 0;
+    }
+    .about-section--soft {
+      background: #f8f8f8;
+    }
+    .about-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 0 0 18px;
+      color: #a91f24;
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .about-kicker::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #a91f24;
+    }
+    .about-hero {
+      padding: 36px 0 68px;
+      background:
+        radial-gradient(circle at 85% 15%, rgba(252, 219, 102, .35), transparent 28%),
+        linear-gradient(180deg, #fff 0%, #f8f8f8 100%);
+    }
+    .about-hero__grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(320px, .85fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    .about-hero__main {
+      min-height: 470px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 46px;
+      border-radius: 18px;
+      background: #2f3855;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-hero__main::after {
+      content: "";
+      position: absolute;
+      right: -120px;
+      top: -120px;
+      width: 360px;
+      height: 360px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.04);
+    }
+    .about-hero__title {
+      max-width: 720px;
+      margin: 0 0 22px;
+      color: #fff;
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 600;
+      line-height: 1.04;
+      letter-spacing: -.04em;
+      position: relative;
+      z-index: 1;
+    }
+    .about-hero__title mark {
+      color: #fcdb66;
+      background: none;
+    }
+    .about-hero__lead {
+      max-width: 610px;
+      margin: 0;
+      color: rgba(255,255,255,.78);
+      font-size: 18px;
+      line-height: 1.65;
+      position: relative;
+      z-index: 1;
+    }
+    .about-hero__actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      position: relative;
+      z-index: 1;
+    }
+    .about-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 52px;
+      padding: 0 24px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .about-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 30px rgba(15, 23, 42, .12);
+    }
+    .about-btn--gold {
+      background: #fcdb66;
+      color: #171717;
+    }
+    .about-btn--light {
+      background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.18);
+      color: #fff;
+    }
+    .about-hero__aside {
+      display: grid;
+      gap: 24px;
+    }
+    .about-stat-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 223px;
+      padding: 30px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #e9edf3;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .06);
+    }
+    .about-stat-card--accent {
+      background: #fcdb66;
+      border-color: transparent;
+    }
+    .about-stat-card__num {
+      font-size: clamp(42px, 6vw, 70px);
+      font-weight: 600;
+      line-height: .95;
+      letter-spacing: -.06em;
+    }
+    .about-stat-card__text {
+      max-width: 300px;
+      margin: 16px 0 0;
+      color: rgba(0,0,0,.68);
+      font-size: 16px;
+      line-height: 1.5;
+    }
+    .about-title-row {
+      display: grid;
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1fr);
+      gap: 36px;
+      align-items: end;
+      margin-bottom: 34px;
+    }
+    .about-title-row h2,
+    .about-section-title {
+      margin: 0;
+      color: #0f172a;
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 600;
+      line-height: 1.08;
+      letter-spacing: -.035em;
+    }
+    .about-title-row p {
+      margin: 0;
+      color: #64748b;
+      font-size: 17px;
+      line-height: 1.65;
+    }
+    .about-feature-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .about-feature {
+      min-height: 245px;
+      padding: 26px;
+      border-radius: 18px;
+      background: #f8f8f8;
+      border: 1px solid #e9edf3;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .about-feature:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(15, 23, 42, .08);
+    }
+    .about-feature--dark {
+      background: #3d3c3f;
+      color: #fff;
+      border-color: #3d3c3f;
+    }
+    .about-feature--blue {
+      background: #e6f3ff;
+    }
+    .about-feature--gold {
+      background: #fcdb66;
+      border-color: #fcdb66;
+    }
+    .about-feature__icon {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      margin-bottom: 22px;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .about-feature__icon img {
+      width: 22px;
+      height: 22px;
+    }
+    .about-feature h3 {
+      margin: 0 0 10px;
+      font-size: 21px;
+      font-weight: 600;
+      line-height: 1.25;
+    }
+    .about-feature p {
+      margin: 0;
+      color: rgba(15, 23, 42, .68);
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .about-feature--dark p {
+      color: rgba(255,255,255,.72);
+    }
+    .about-founder {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(320px, .9fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+    .about-founder__quote {
+      min-height: 420px;
+      padding: 42px;
+      border-radius: 18px;
+      background: #2f3855;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-founder__quote::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: .18;
+      background:
+        repeating-linear-gradient(to right, rgba(255,255,255,.18) 0 1px, transparent 1px 64px),
+        repeating-linear-gradient(to bottom, rgba(255,255,255,.18) 0 1px, transparent 1px 64px);
+    }
+    .about-founder__quote > * {
+      position: relative;
+      z-index: 1;
+    }
+    .about-founder__quote img {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 28px;
+    }
+    .about-founder__quote blockquote {
+      margin: 0 0 30px;
+      font-size: clamp(24px, 3.2vw, 40px);
+      font-weight: 600;
+      line-height: 1.18;
+      letter-spacing: -.03em;
+    }
+    .about-founder__name {
+      margin: 0;
+      color: #fff;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .about-founder__role {
+      margin: 6px 0 0;
+      color: rgba(255,255,255,.64);
+      font-size: 15px;
+    }
+    .about-founder__side {
+      display: grid;
+      gap: 18px;
+    }
+    .about-mini-card {
+      padding: 28px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #e9edf3;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, .05);
+    }
+    .about-mini-card h3 {
+      margin: 0 0 14px;
+      font-size: 22px;
+      font-weight: 600;
+    }
+    .about-mini-card ul {
+      display: grid;
+      gap: 10px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .about-mini-card li {
+      position: relative;
+      padding-left: 18px;
+      color: #475569;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+    .about-mini-card li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: .62em;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #a91f24;
+    }
+    .about-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+    .about-step {
+      padding: 28px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid #e9edf3;
+    }
+    .about-step__num {
+      margin: 0 0 26px;
+      color: rgba(15, 23, 42, .16);
+      font-size: 50px;
+      line-height: 1;
+      font-weight: 300;
+      letter-spacing: -.05em;
+    }
+    .about-step h3 {
+      margin: 0 0 10px;
+      font-size: 20px;
+      font-weight: 600;
+    }
+    .about-step p {
+      margin: 0;
+      color: #64748b;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+    .about-cta {
+      padding: 44px;
+      border-radius: 22px;
+      background: #3d3c3f;
+      color: #fff;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 28px;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .about-cta::after {
+      content: "";
+      position: absolute;
+      right: -80px;
+      bottom: -120px;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: rgba(252, 219, 102, .14);
+    }
+    .about-cta h2 {
+      margin: 0 0 10px;
+      color: #fff;
+      font-size: clamp(30px, 4vw, 46px);
+      font-weight: 600;
+      letter-spacing: -.035em;
+      line-height: 1.08;
+    }
+    .about-cta p {
+      max-width: 680px;
+      margin: 0;
+      color: rgba(255,255,255,.72);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+    .about-cta > * {
+      position: relative;
+      z-index: 1;
+    }
+    @media (max-width: 1199px) {
+      .about-hero__grid,
+      .about-founder,
+      .about-title-row,
+      .about-cta {
+        grid-template-columns: 1fr;
+      }
+      .about-feature-grid,
+      .about-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .about-cta {
+        align-items: start;
+      }
+    }
+    @media (max-width: 767px) {
+      .about-section {
+        padding: 46px 0;
+      }
+      .about-hero {
+        padding: 24px 0 46px;
+      }
+      .about-hero__main,
+      .about-founder__quote,
+      .about-cta {
+        padding: 28px;
+      }
+      .about-hero__main {
+        min-height: 440px;
+      }
+      .about-feature-grid,
+      .about-steps {
+        grid-template-columns: 1fr;
+      }
+      .about-stat-card {
+        min-height: 180px;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page about-page">
+  <div class="fixed-buttons">
+    <a class="fixed-buttons__btn" href="/local/cases/">
+      <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 5V2c0-.55.45-1 1-1h8c.55 0 1 .45 1 1v3h4c.55 0 1 .45 1 1v14c0 .55-.45 1-1 1H3c-.55 0-1-.45-1-1V6c0-.55.45-1 1-1h4Zm2-2v2h6V3H9Zm11 11V7H4v7h16Zm0 2H4v3h16v-3Z" fill="white" fill-opacity=".7"/></svg>
+      <span>Кейсы</span>
+    </a>
+    <a class="fixed-buttons__btn" href="/local/objects/">
+      <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M21 20c0 .55-.45 1-1 1H4c-.55 0-1-.45-1-1V9.49c0-.31.14-.6.39-.79l8-6.22a1 1 0 0 1 1.22 0l8 6.22c.25.19.39.48.39.79V20Zm-2-1V9.98l-7-5.44-7 5.44V19h14ZM7 15h10v2H7v-2Z" fill="white" fill-opacity=".7"/></svg>
+      <span>Объекты</span>
+    </a>
+    <a class="fixed-buttons__btn" href="#">
+      <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M4 2h16c.55 0 1 .45 1 1v19.28a.5.5 0 0 1-.7.45L12 19.03l-8.3 3.7a.5.5 0 0 1-.7-.45V3c0-.55.45-1 1-1Zm15 17.97V4H5v15.97l7-3.13 7 3.13ZM12 13.5l-2.94 1.55.56-3.27-2.38-2.32 3.29-.48L12 6l1.47 2.98 3.28.48-2.37 2.32.56 3.27L12 13.5Z" fill="white" fill-opacity=".7"/></svg>
+      <span>Моя подборка</span>
+    </a>
+    <div class="fixed-buttons__btn btn-menu">
+      <svg fill="none" height="24" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M3 4h18v2H3V4Zm0 7h18v2H3v-2Zm0 7h18v2H3v-2Z" fill="white" fill-opacity=".7"/></svg>
+      <span>Меню</span>
+    </div>
+  </div>
+
+  <header class="hero-header">
+    <div class="container">
+      <div class="hero-header__inner">
+        <a class="hero-logo" href="/local/">
+          <img alt="BEREGA" class="hero-logo__img" src="/local/templates/berega/img/logo.svg">
+          <span class="hero-logo__sub">Бюро недвижимости</span>
+        </a>
+        <div class="menu-overlay"></div>
+        <nav class="hero-nav" aria-label="Основная навигация">
+          <a href="/local/cases/">Кейсы</a>
+          <a href="/local/objects/">Объекты</a>
+          <a href="/local/news/">Статьи</a>
+          <a class="selected" href="/local/about/">О компании</a>
+          <a href="/local/contacts/">Контакты</a>
+          <div class="hero-nav__close"><svg viewbox="0 0 320 512" xmlns="http://www.w3.org/2000/svg"><path d="M193.94 256 296.5 153.44l21.15-21.15a8 8 0 0 0 0-11.31l-22.63-22.63a8 8 0 0 0-11.31 0L160 222.06 36.29 98.34a8 8 0 0 0-11.31 0L2.34 120.97a8 8 0 0 0 0 11.31L126.06 256 2.34 379.71a8 8 0 0 0 0 11.31l22.63 22.63a8 8 0 0 0 11.31 0L160 289.94 283.71 413.66a8 8 0 0 0 11.31 0l22.63-22.63a8 8 0 0 0 0-11.31L193.94 256z"/></svg></div>
+        </nav>
+        <div class="hero-phone">
+          <a class="hero-phone__icon fancybox" href="#callback"><img alt="" aria-hidden="true" class="hero-phone__icon-img" src="/local/templates/berega/img/phone.svg"></a>
+          <span class="hero-phone__meta">
+            <a class="hero-phone__number" href="tel:+79781234567" rel="nofollow">+7 (978) 123-45-67</a>
+            <span class="hero-phone__hint"><span aria-hidden="true" class="hero-phone__dot"></span>Звоните, Пн-Пт 9-18</span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-hero">
+      <div class="container">
+        <ul class="breadcrumbs">
+          <li><a href="/local/">Главная</a></li>
+          <li>О компании</li>
+        </ul>
+        <div class="about-hero__grid">
+          <div class="about-hero__main">
+            <div>
+              <div class="about-kicker">О бюро BEREGA</div>
+              <h1 class="about-hero__title">Крымская недвижимость для тех, кто <mark>считает цифры</mark></h1>
+              <p class="about-hero__lead">Помогаем выбирать объекты у моря как инвестиционный актив: с проверкой локации, застройщика, юридической базы, расходов и сценариев выхода.</p>
+            </div>
+            <div class="about-hero__actions">
+              <a class="about-btn about-btn--gold fancybox" href="#callback">Получить подборку</a>
+              <a class="about-btn about-btn--light" href="/cases/nazvanie-keysa-1/">Смотреть кейс</a>
+            </div>
+          </div>
+          <div class="about-hero__aside">
+            <div class="about-stat-card about-stat-card--accent">
+              <div class="about-stat-card__num">15 лет</div>
+              <p class="about-stat-card__text">локальной экспертизы в Крыму: локации, застройщики, сезонность и инфраструктура.</p>
+            </div>
+            <div class="about-stat-card">
+              <div class="about-stat-card__num">100+</div>
+              <p class="about-stat-card__text">сделок и инвестиционных сценариев: от апартаментов под аренду до семейных квартир у моря.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container">
+        <div class="about-title-row">
+          <h2>Не продаём “метры”. Собираем понятный сценарий владения.</h2>
+          <p>В каждом подборе мы смотрим не только на цену и визуализацию, но и на реальную ликвидность: кто будет арендатором или покупателем, какие расходы появятся после сделки и где может просесть модель.</p>
+        </div>
+        <div class="about-feature-grid">
+          <article class="about-feature about-feature--dark">
+            <span class="about-feature__icon"><img src="/local/templates/berega/img/factors-icon-entry.svg" alt=""></span>
+            <h3>Честный вход</h3>
+            <p>Показываем полную стоимость входа: ПВ, платежи, отделку, меблировку, налоги и операционные расходы.</p>
+          </article>
+          <article class="about-feature about-feature--blue">
+            <span class="about-feature__icon"><img src="/local/templates/berega/img/factors-icon-strategy.svg" alt=""></span>
+            <h3>Стратегия выхода</h3>
+            <p>До покупки считаем, как объект можно сдавать, удерживать или перепродать через 12-36 месяцев.</p>
+          </article>
+          <article class="about-feature about-feature--gold">
+            <span class="about-feature__icon"><img src="/local/templates/berega/img/ic_growth.svg" alt=""></span>
+            <h3>Сравнение объектов</h3>
+            <p>Ставим рядом несколько вариантов и показываем, где цифры сильнее, а где просто красивее маркетинг.</p>
+          </article>
+          <article class="about-feature">
+            <span class="about-feature__icon"><img src="/local/templates/berega/img/office-icon.svg" alt=""></span>
+            <h3>Локальное присутствие</h3>
+            <p>Проверяем район, динамику стройки и бытовые детали, которые сложно увидеть из презентации.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-section--soft">
+      <div class="container">
+        <div class="about-founder">
+          <div class="about-founder__quote">
+            <img src="/local/templates/berega/img/quote-icon.svg" alt="">
+            <blockquote>Если объект не проходит по расчёту и рискам, мы не предлагаем его клиенту, даже если он выглядит эффектно.</blockquote>
+            <p class="about-founder__name">Руслан Авчинников</p>
+            <p class="about-founder__role">Основатель бюро недвижимости BEREGA</p>
+          </div>
+          <div class="about-founder__side">
+            <div class="about-mini-card">
+              <h3>Зона ответственности</h3>
+              <ul>
+                <li>Утверждение инвестиционных сценариев и расчётов</li>
+                <li>Контроль качества подбора и юридической проверки</li>
+                <li>Финальное сравнение объектов перед рекомендацией</li>
+              </ul>
+            </div>
+            <div class="about-mini-card">
+              <h3>Почему Крым</h3>
+              <ul>
+                <li>Ограниченное предложение качественных локаций у моря</li>
+                <li>Сильная сезонная экономика и спрос на аренду</li>
+                <li>Разница между маркетинговой ценой и реальной ликвидностью</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section">
+      <div class="container">
+        <div class="about-title-row">
+          <h2>Как мы работаем с подбором</h2>
+          <p>Процесс построен так, чтобы убрать эмоциональный шум и оставить понятную картину: цель, цифры, риски, документы и план действий.</p>
+        </div>
+        <div class="about-steps">
+          <article class="about-step">
+            <p class="about-step__num">01</p>
+            <h3>Фиксируем цель</h3>
+            <p>Доходность, рост капитала, семейное использование, бюджет, срок владения и допустимый риск.</p>
+          </article>
+          <article class="about-step">
+            <p class="about-step__num">02</p>
+            <h3>Собираем короткий список</h3>
+            <p>Отсекаем объекты без логики выхода, слабой инфраструктурой или непрозрачной экономикой.</p>
+          </article>
+          <article class="about-step">
+            <p class="about-step__num">03</p>
+            <h3>Считаем сценарии</h3>
+            <p>Базовый, осторожный и оптимистичный вариант: доходы, расходы, налоговая нагрузка и ликвидность.</p>
+          </article>
+          <article class="about-step">
+            <p class="about-step__num">04</p>
+            <h3>Сопровождаем сделку</h3>
+            <p>Проверка документов, переговоры, ДДУ/переуступка, регистрация и дальнейшая эксплуатация.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-section--soft">
+      <div class="container">
+        <div class="about-cta">
+          <div>
+            <h2>Разберём ваш бюджет и покажем 3 сценария</h2>
+            <p>Подготовим понятную подборку: что купить для роста капитала, что рассмотреть под аренду и какие варианты лучше не трогать.</p>
+          </div>
+          <a class="about-btn about-btn--gold fancybox" href="#callback">Оставить заявку</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="site-footer__inner">
+        <div class="site-footer__top">
+          <div class="site-footer__brand-wrap">
+            <a class="site-footer__brand" href="/local/">
+              <img alt="BEREGA" class="site-footer__brand-logo" src="/local/templates/berega/img/logo.svg">
+              <span class="site-footer__brand-sub">Бюро недвижимости</span>
+            </a>
+            <div class="hero-phone">
+              <span class="hero-phone__icon"><img alt="" aria-hidden="true" class="hero-phone__icon-img" src="/local/templates/berega/img/phone.svg"></span>
+              <span class="hero-phone__meta">
+                <a class="hero-phone__number" href="tel:+79781234567" rel="nofollow">+7 (978) 123-45-67</a>
+                <span class="hero-phone__hint"><span aria-hidden="true" class="hero-phone__dot"></span>Звоните, Пн-Пт 9-18</span>
+              </span>
+            </div>
+            <div class="site-footer__legal">
+              <span class="site-footer__legal-line">ИП Авчинников Р. В.</span>
+              <span class="site-footer__legal-line">ИНН 910207214585</span>
+              <span class="site-footer__legal-line">ОГРНИП 319911200072827</span>
+            </div>
+          </div>
+          <div class="site-footer__col">
+            <h3 class="site-footer__col-title">Объекты</h3>
+            <div class="site-footer__links">
+              <a href="/local/objects/">Ботаника</a>
+              <a href="/local/objects/">Дарсан</a>
+              <a href="/local/objects/">Западная</a>
+              <a href="/local/objects/">Италика</a>
+              <a href="/local/objects/">Мойнако</a>
+            </div>
+          </div>
+          <div class="site-footer__col">
+            <h3 class="site-footer__col-title">Кейсы</h3>
+            <div class="site-footer__links">
+              <a href="/cases/nazvanie-keysa-1/">Лазурный берег</a>
+              <a href="/local/cases/">Сделка 2</a>
+              <a href="/local/cases/">Сделка 3</a>
+              <a href="/local/cases/">Сделка 4</a>
+              <a href="/local/cases/">Сделка 5</a>
+            </div>
+          </div>
+          <div class="site-footer__col site-footer__menu">
+            <div class="site-footer__links">
+              <a href="/local/about/">О компании</a>
+              <a href="/local/news/">Статьи</a>
+              <a href="#">Видео</a>
+              <a href="#">Подкасты</a>
+              <a href="/local/contacts/">Контакты</a>
+            </div>
+          </div>
+          <div class="site-footer__contacts">
+            <a class="site-footer__phone" href="tel:+79781234567" rel="nofollow">+7 (978) 123-45-67</a>
+            <div class="site-footer__legal">
+              <span class="site-footer__legal-line">ИП Авчинников Р. В.</span>
+              <span class="site-footer__legal-line">ИНН 910207214585</span>
+              <span class="site-footer__legal-line">ОГРНИП 319911200072827</span>
+            </div>
+            <div class="site-footer__social">
+              <a aria-label="Telegram" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="" src="/local/templates/berega/img/footer-telegram.svg"></a>
+              <a aria-label="WhatsApp" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="" src="/local/templates/berega/img/footer-whatsapp.svg"></a>
+              <a aria-label="MAX" href="#" rel="nofollow noopener noreferrer" target="_blank"><img alt="" src="/local/templates/berega/img/footer-max.svg"></a>
+            </div>
+          </div>
+        </div>
+        <div class="site-footer__bottom">
+          <div class="site-footer__policy">
+            <a href="/local/policy/">Политика конфиденциальности</a>
+            <a href="/local/soglasie/">Согласие на обработку персональных данных</a>
+          </div>
+          <span>© Copyright 2026 г.</span>
+          <span class="site-footer__made">Сделано в <img alt="SHEER" class="site-footer__sheer" src="/local/templates/berega/img/sheer-logo.svg"></span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div>
+
+<div class="modal-block" id="callback">
+  <div class="form-main">
+    <div class="form-main__title">Рассчитаем 3 инвестиционных сценария под вашу сумму <br>и цель</div>
+    <div class="form-main__descr">Доходность. Четкие сроки. Логика выхода. Без воды</div>
+    <form action="#" method="post">
+      <div class="scenario-form__group">
+        <input class="scenario-input input-phone" name="phone" placeholder="Ваш телефон" required type="tel" aria-label="Телефон">
+        <select class="scenario-input" required aria-label="Бюджет">
+          <option value="" disabled selected>Бюджет</option>
+          <option value="1">10-20 млн ₽</option>
+          <option value="2">20-40 млн ₽</option>
+          <option value="3">от 40 млн ₽</option>
+        </select>
+      </div>
+      <input class="btn-main" type="submit" value="Получить 3 инвестиционных сценария">
+      <div class="checkbox">
+        <label>
+          <input type="checkbox" checked required>
+          <span>Выражаю <a href="/local/soglasie/">согласие</a> на обработку моих персональных данных в соответствии с <a href="/local/policy/">Политикой обработки персональных данных</a></span>
+        </label>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script src="/local/templates/berega/libs/jquery/jquery-3.6.0.min.js"></script>
+<script src="/local/templates/berega/libs/slick/slick.min.js"></script>
+<script src="/local/templates/berega/libs/fancybox/jquery.fancybox.min.js"></script>
+<script src="/local/templates/berega/libs/mask/jquery.maskedinput.js"></script>
+<script src="/local/templates/berega/js/jquery.cookie.js"></script>
+<script src="/local/templates/berega/js/common.js"></script>
+<script src="/local/templates/berega/js/app.js"></script>
+</body>
+</html>
+
