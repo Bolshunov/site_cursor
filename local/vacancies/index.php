@@ -1,23 +1,60 @@
-<!doctype html>
-<html lang="ru">
-<head>
-  <meta charset="utf-8">
-  <meta http-equiv="refresh" content="0; url=/local/vacancies/index.php">
-  <title>Вакансии — BEREGA</title>
-  <script>window.location.replace('/local/vacancies/index.php');</script>
-</head>
-<body>
-  <p><a href="/local/vacancies/index.php">Открыть страницу вакансий</a></p>
-</body>
-</html>
-<!DOCTYPE html>
+﻿<?php
+declare(strict_types=1);
+
+define('NO_KEEP_STATISTIC', true);
+define('NOT_CHECK_PERMISSIONS', true);
+define('BX_NO_ACCELERATOR_RESET', true);
+
+require $_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_before.php';
+
+$vacanciesSettings = [
+    'PAGE_TITLE' => 'Вакансии — BEREGA',
+    'META_DESCRIPTION' => 'Тестовая страница вакансий BEREGA в тёмном MNTN UI: команды, роли и карьерный маршрут.',
+    'HEADER_LOGO_TEXT' => 'BEREGA',
+    'NAV_JOBS_TEXT' => 'Вакансии',
+    'NAV_ABOUT_TEXT' => 'О компании',
+    'NAV_CASES_TEXT' => 'Кейсы',
+    'HEADER_HR_TEXT' => 'HR',
+    'SOCIAL_LABEL' => 'Follow us',
+    'SOCIAL_INSTAGRAM_TEXT' => '◎',
+    'SOCIAL_TELEGRAM_TEXT' => '✦',
+    'SLIDER_START_TEXT' => 'Start',
+    'SLIDER_01_TEXT' => '01',
+    'SLIDER_02_TEXT' => '02',
+    'SLIDER_03_TEXT' => '03',
+    'SLIDER_04_TEXT' => '04',
+    'HERO_EYEBROW' => 'Careers at BEREGA',
+    'HERO_TITLE' => 'Вакансии для тех, кто умеет вести клиента выше обычного сервиса',
+    'HERO_SCROLL_TEXT' => 'Смотреть роли',
+];
+
+if (\Bitrix\Main\Loader::includeModule('iblock')) {
+    $properties = CIBlockElement::GetProperty(5, 33, ['sort' => 'asc'], []);
+    while ($property = $properties->Fetch()) {
+        $code = (string)($property['CODE'] ?? '');
+        $value = $property['VALUE'] ?? '';
+        if (is_array($value) && isset($value['TEXT'])) {
+            $value = $value['TEXT'];
+        }
+        if ($code !== '' && array_key_exists($code, $vacanciesSettings) && trim((string)$value) !== '') {
+            $vacanciesSettings[$code] = (string)$value;
+        }
+    }
+}
+
+function vtxt(string $code): string
+{
+    global $vacanciesSettings;
+    return htmlspecialchars((string)($vacanciesSettings[$code] ?? ''), ENT_QUOTES | ENT_SUBSTITUTE, 'UTF-8');
+}
+?><!DOCTYPE html>
 <html lang="ru">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="format-detection" content="telephone=no">
-  <title>Вакансии — BEREGA</title>
-  <meta name="description" content="Тестовая страница вакансий BEREGA в тёмном MNTN UI: команды, роли и карьерный маршрут.">
+  <title><?= vtxt('PAGE_TITLE') ?></title>
+  <meta name="description" content="<?= vtxt('META_DESCRIPTION') ?>">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
@@ -638,28 +675,28 @@
   </div>
 
   <header class="header">
-    <a class="logo" href="/local/">BEREGA</a>
+    <a class="logo" href="/local/"><?= vtxt('HEADER_LOGO_TEXT') ?></a>
     <nav class="nav" aria-label="Главная навигация">
-      <a href="#jobs">Вакансии</a>
-      <a href="/local/about/">О компании</a>
-      <a href="/local/cases/">Кейсы</a>
+      <a href="#jobs"><?= vtxt('NAV_JOBS_TEXT') ?></a>
+      <a href="/local/about/"><?= vtxt('NAV_ABOUT_TEXT') ?></a>
+      <a href="/local/cases/"><?= vtxt('NAV_CASES_TEXT') ?></a>
     </nav>
-    <a class="account" href="mailto:hr@berega.test">HR</a>
+    <a class="account" href="mailto:hr@berega.test"><?= vtxt('HEADER_HR_TEXT') ?></a>
   </header>
 
   <aside class="social" aria-label="Социальные сети">
-    <span>Follow us</span>
-    <a href="#" aria-label="Instagram">◎</a>
-    <a href="#" aria-label="Telegram">✦</a>
+    <span><?= vtxt('SOCIAL_LABEL') ?></span>
+    <a href="#" aria-label="Instagram"><?= vtxt('SOCIAL_INSTAGRAM_TEXT') ?></a>
+    <a href="#" aria-label="Telegram"><?= vtxt('SOCIAL_TELEGRAM_TEXT') ?></a>
   </aside>
 
   <aside class="slider" aria-label="Навигация по странице">
     <div class="slider__text">
-      <a href="#">Start</a>
-      <a href="#jobs">01</a>
-      <a href="#culture">02</a>
-      <a href="#apply">03</a>
-      <a href="#broker">04</a>
+      <a href="#"><?= vtxt('SLIDER_START_TEXT') ?></a>
+      <a href="#jobs"><?= vtxt('SLIDER_01_TEXT') ?></a>
+      <a href="#culture"><?= vtxt('SLIDER_02_TEXT') ?></a>
+      <a href="#apply"><?= vtxt('SLIDER_03_TEXT') ?></a>
+      <a href="#broker"><?= vtxt('SLIDER_04_TEXT') ?></a>
     </div>
     <div class="slider__line"></div>
   </aside>
@@ -667,9 +704,9 @@
   <main>
     <section class="hero">
       <div class="hero-content">
-        <div class="eyebrow">Careers at BEREGA</div>
-        <h1 class="hero-title">Вакансии для тех, кто умеет вести клиента выше обычного сервиса</h1>
-        <a class="scroll-link" href="#jobs">Смотреть роли</a>
+        <div class="eyebrow"><?= vtxt('HERO_EYEBROW') ?></div>
+        <h1 class="hero-title"><?= vtxt('HERO_TITLE') ?></h1>
+        <a class="scroll-link" href="#jobs"><?= vtxt('HERO_SCROLL_TEXT') ?></a>
       </div>
     </section>
 
@@ -748,8 +785,8 @@
           <h3>Разделы</h3>
           <ul>
             <li><a href="/local/">Главная</a></li>
-            <li><a href="/local/about/">О компании</a></li>
-            <li><a href="/local/cases/">Кейсы</a></li>
+            <li><a href="/local/about/"><?= vtxt('NAV_ABOUT_TEXT') ?></a></li>
+            <li><a href="/local/cases/"><?= vtxt('NAV_CASES_TEXT') ?></a></li>
           </ul>
         </div>
         <div>
@@ -767,3 +804,4 @@
 </div>
 </body>
 </html>
+
