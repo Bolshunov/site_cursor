@@ -42,6 +42,13 @@
       text-decoration: none;
     }
 
+    a,
+    .story,
+    .story-visual,
+    .vacancy-card {
+      transition: color .2s ease, transform .25s ease, opacity .2s ease, border-color .25s ease, background .25s ease, box-shadow .25s ease;
+    }
+
     .mntn-page {
       position: relative;
       min-height: 100vh;
@@ -124,12 +131,20 @@
       letter-spacing: .01em;
     }
 
+    .logo:hover,
+    .nav a:hover,
+    .account:hover,
+    .social a:hover,
+    .slider a:hover {
+      color: var(--accent);
+    }
+
     .nav {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 40px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
     }
 
@@ -137,7 +152,7 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 17px;
+      font-size: 16px;
       font-weight: 700;
     }
 
@@ -168,7 +183,7 @@
       gap: 32px;
       margin-bottom: 32px;
       color: var(--accent);
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
       line-height: 22px;
       letter-spacing: 6px;
@@ -185,7 +200,7 @@
     .hero-title {
       margin: 0;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(58px, 7vw, 88px);
+      font-size: clamp(46px, 6vw, 72px);
       font-weight: 600;
       line-height: 1.14;
       text-transform: capitalize;
@@ -196,8 +211,14 @@
       align-items: center;
       gap: 14px;
       margin-top: 32px;
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 700;
+    }
+
+    .scroll-link:hover,
+    .more:hover {
+      color: #fff;
+      transform: translateX(6px);
     }
 
     .scroll-link::after {
@@ -248,14 +269,14 @@
       flex-direction: column;
       align-items: flex-end;
       gap: 40px;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 22px;
     }
 
     .slider__line {
       position: relative;
       width: 3px;
-      height: 240px;
+      height: 300px;
       background: rgba(255,255,255,.5);
     }
 
@@ -265,7 +286,7 @@
       left: 0;
       top: 0;
       width: 3px;
-      height: 60px;
+      height: 75px;
       background: #fff;
     }
 
@@ -276,7 +297,7 @@
       margin: 0 auto;
       display: flex;
       flex-direction: column;
-      gap: 200px;
+      gap: 170px;
       padding-bottom: 120px;
     }
 
@@ -287,6 +308,16 @@
       grid-template-columns: minmax(0, 1fr) 566px;
       gap: 92px;
       align-items: center;
+    }
+
+    .story:hover .story-visual {
+      transform: translateY(-8px);
+      box-shadow: 0 44px 96px rgba(0,0,0,.38);
+    }
+
+    .story:hover .vacancy-card {
+      border-color: rgba(251,215,132,.55);
+      background: rgba(11,29,38,.88);
     }
 
     .story:nth-child(even) {
@@ -331,7 +362,7 @@
       max-width: 555px;
       margin: 0 0 27px;
       font-family: "Playfair Display", Georgia, serif;
-      font-size: clamp(42px, 5vw, 64px);
+      font-size: clamp(34px, 4vw, 52px);
       font-weight: 600;
       line-height: 1.2;
     }
@@ -340,9 +371,9 @@
       max-width: 632px;
       margin: 0 0 27px;
       color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 32px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 29px;
     }
 
     .more {
@@ -350,7 +381,7 @@
       align-items: center;
       gap: 16px;
       color: var(--accent);
-      font-size: 18px;
+      font-size: 16px;
       font-weight: 800;
     }
 
@@ -416,7 +447,7 @@
     .vacancy-card span {
       display: block;
       color: #fff;
-      font-size: 24px;
+      font-size: 21px;
       font-family: "Playfair Display", Georgia, serif;
       line-height: 1.2;
     }
@@ -440,23 +471,23 @@
       max-width: 360px;
       margin: 0;
       color: #fff;
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 32px;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 29px;
     }
 
     .footer small {
       display: block;
       margin-top: 92px;
       color: rgba(255,255,255,.5);
-      font-size: 18px;
+      font-size: 16px;
       line-height: 32px;
     }
 
     .footer h3 {
       margin: 0 0 24px;
       color: var(--accent);
-      font-size: 24px;
+      font-size: 22px;
       line-height: 32px;
     }
 
@@ -466,7 +497,7 @@
       margin: 0;
       padding: 0;
       list-style: none;
-      font-size: 18px;
+      font-size: 16px;
       line-height: 32px;
     }
 
@@ -587,6 +618,7 @@
       <a href="#jobs">01</a>
       <a href="#culture">02</a>
       <a href="#apply">03</a>
+      <a href="#broker">04</a>
     </div>
     <div class="slider__line"></div>
   </aside>
@@ -649,6 +681,22 @@
         </div>
       </article>
 
+      <article class="story" id="broker">
+        <div class="story-number">04</div>
+        <div class="story-copy">
+          <div class="eyebrow">Sales Route</div>
+          <h2>Брокер по недвижимости</h2>
+          <p>Ищем брокера, который умеет вести диалог с инвестором, быстро разбираться в запросе и доводить клиента до просмотра, выбора объекта и сделки вместе с экспертом команды.</p>
+          <a class="more" href="mailto:hr@berega.test?subject=Брокер по недвижимости">Откликнуться</a>
+        </div>
+        <div class="story-visual">
+          <div class="vacancy-card">
+            <strong>Full-time · 60 000 ₽ + процент от продаж</strong>
+            <span>Первичный контакт, квалификация клиента, сопровождение сделки</span>
+          </div>
+        </div>
+      </article>
+
       <footer class="footer">
         <div>
           <div class="footer__logo">BEREGA</div>
@@ -668,6 +716,7 @@
           <ul>
             <li><a href="#jobs">Открытые роли</a></li>
             <li><a href="#culture">Как работаем</a></li>
+            <li><a href="#broker">Брокер</a></li>
             <li><a href="mailto:hr@berega.test">Написать HR</a></li>
           </ul>
         </div>
